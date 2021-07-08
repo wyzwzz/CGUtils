@@ -1,0 +1,8 @@
+//
+// Created by wyz on 2021/7/3.
+//
+
+#ifndef CGUTILS_BOUNDINGBOX_HPP
+#define CGUTILS_BOUNDINGBOX_HPP
+
+#endif //CGUTILS_BOUNDINGBOX_HPP

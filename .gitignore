@@ -1,0 +1,5 @@
+cmake-build-debug
+cmale-build-release
+test_data
+*data*
+*build*

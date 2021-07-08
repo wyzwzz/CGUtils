@@ -1,0 +1,5 @@
+include_directories(${PROJECT_SOURCE_DIR}/include)
+add_executable(test_camera test_camera.cpp)
+add_executable(test_lru test_lru.cpp)
+add_executable(test_ref test_ref.cpp)
+add_executable(test_singleton test_singleton.cpp)
