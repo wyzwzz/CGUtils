@@ -11,6 +11,9 @@
 #if _HAS_CXX17
 #include <optional>
 #endif
+/**
+ * should add lock if using for multi-thread
+ */
 template<typename Key,typename Value,typename Hash=std::hash<Key>>
 class LRUCache{
 public:

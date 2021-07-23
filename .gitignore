@@ -3,3 +3,5 @@ cmale-build-release
 test_data
 *data*
 *build*
+.idea
+.vscode
