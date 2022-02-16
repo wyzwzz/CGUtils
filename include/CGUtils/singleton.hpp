@@ -37,8 +37,8 @@ public:
 template<typename T>
 class Singleton<T,typename std::enable_if<!std::is_default_constructible<T>::value>::type>{
 private:
-    static T* ins;
-    static bool inited;
+    inline static T* ins=nullptr;
+    inline static bool inited=false;
     static T* instance(){
         if(inited)
             return ins;
@@ -68,9 +68,10 @@ public:
         return instance();
     }
 };
-template<typename T>
-T* Singleton<T,typename std::enable_if<!std::is_default_constructible<T>::value>::type>::ins=nullptr;
-template<typename T>
-bool Singleton<T,typename std::enable_if<!std::is_default_constructible<T>::value>::type>::inited=false;
+//use inline as for cxx 17
+//template<typename T>
+//T* Singleton<T,typename std::enable_if<!std::is_default_constructible<T>::value>::type>::ins=nullptr;
+//template<typename T>
+//bool Singleton<T,typename std::enable_if<!std::is_default_constructible<T>::value>::type>::inited=false;
 
 #endif //CGUTILS_SINGLETON_HPP
