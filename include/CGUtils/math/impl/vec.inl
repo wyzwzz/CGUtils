@@ -1,6 +1,6 @@
 #pragma once
 
-WYZ_MATH_BEGIN
+WZZ_MATH_BEGIN
 
 template <typename T, int D>
 tvec<T, D>::tvec() noexcept
@@ -42,4 +42,4 @@ const T& tvec<T,D>::operator[](int idx) const noexcept
     return data[idx];
 }
 
-WYZ_MATH_END
+WZZ_MATH_END

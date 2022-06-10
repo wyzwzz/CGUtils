@@ -1,6 +1,6 @@
 #pragma once
 #include <functional>
-namespace wyz::misc{
+namespace wzz::misc{
 
 namespace hash_impl{
     inline size_t hash_combine(size_t a, size_t b){

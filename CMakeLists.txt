@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.16)
 project(CGUtils LANGUAGES CXX)
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
+
+option(BUILD_TEST "" OFF)
 
 file(
         GLOB_RECURSE CGUTILS_SRCS
@@ -23,4 +25,6 @@ target_compile_features(
         cxx_std_17
 )
 
-add_subdirectory(test)
+if(BUILD_TEST)
+    add_subdirectory(test)
+endif()

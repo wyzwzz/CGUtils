@@ -1,6 +1,6 @@
 #pragma once
 #include <cmath>
-WYZ_MATH_BEGIN
+WZZ_MATH_BEGIN
 
 template <typename T>
 tvec2<T>::tvec2() noexcept
@@ -241,4 +241,4 @@ std::ostream& operator<<(std::ostream& out, const tvec2<T>& vec){
     return out;
 }
 
-WYZ_MATH_END
+WZZ_MATH_END

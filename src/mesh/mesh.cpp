@@ -1,9 +1,5 @@
 //
 // Created by wyz on 2022/2/16.
 //
-#include <CGUtils/mesh/mesh.hpp>
+#include <CGUtils/model/model.hpp>
 
-void f(){
-    wyz::math::vec3f t;
-
-}

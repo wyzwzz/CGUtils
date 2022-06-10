@@ -5,7 +5,7 @@
 
 #include "vec2.hpp"
 
-WYZ_MATH_BEGIN
+WZZ_MATH_BEGIN
 
 template <typename T>
 class taabb2{
@@ -55,4 +55,4 @@ using aabb2f = taabb2<float>;
 using aabb2d = taabb2<double>;
 using aabb2i = taabb2<int>;
 
-WYZ_MATH_END
+WZZ_MATH_END

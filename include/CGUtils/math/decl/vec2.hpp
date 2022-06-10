@@ -5,7 +5,7 @@
 #include <ostream>
 #include "common.hpp"
 #include "../../misc/hash.hpp"
-WYZ_MATH_BEGIN
+WZZ_MATH_BEGIN
 
 template <typename T>
 class tvec2{
@@ -109,14 +109,14 @@ using vec2d = tvec2<double>;
 using vec2i = tvec2<int>;
 using vec2b = tvec2<unsigned char>;
 
-WYZ_MATH_END
+WZZ_MATH_END
 
 namespace std{
 
 template <typename T>
-struct hash<wyz::math::tvec2<T>>{
-    size_t operator()(const wyz::math::tvec2<T>& vec) const noexcept{
-        return wyz::misc::hash(vec.x,vec.y);
+struct hash<wzz::math::tvec2<T>>{
+    size_t operator()(const wzz::math::tvec2<T>& vec) const noexcept{
+        return wzz::misc::hash(vec.x,vec.y);
     }
 };
 

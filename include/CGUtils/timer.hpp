@@ -128,16 +128,18 @@ private:
 };
 class AutoTimer: public Timer{
 public:
-    AutoTimer(std::string unit="ms"):unit(unit){
+    AutoTimer(const std::string& msg,const std::string& unit="ms")
+      :msg(msg),unit(unit){
         start();
     }
     ~AutoTimer(){
         stop();
-        std::cout<<"AutoTimer ";
+        std::cout<<"[AutoTimer] "<<msg<<" cost time: ";
         print_duration(unit);
     }
 
 private:
     std::string unit;
+    std::string msg;
 };
 #endif //CGUTILS_TIMER_HPP

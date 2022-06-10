@@ -3,7 +3,7 @@
 //
 #pragma once
 #include <type_traits>
-namespace wyz {
+namespace wzz {
 
 struct uninitialized_t {};
 

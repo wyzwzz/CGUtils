@@ -5,7 +5,7 @@
 
 #include "vec3.hpp"
 
-WYZ_MATH_BEGIN
+WZZ_MATH_BEGIN
 
 template <typename T>
 class taabb3{
@@ -55,4 +55,4 @@ using aabb3f = taabb3<float>;
 using aabb3d = taabb3<double>;
 using aabb3i = taabb3<int>;
 
-WYZ_MATH_END
+WZZ_MATH_END

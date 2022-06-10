@@ -1,9 +1,9 @@
 #pragma once
 
-WYZ_MATH_BEGIN
+WZZ_MATH_BEGIN
 
 template <typename T>
-taabb3<T>::taabb3()
+taabb3<T>::taabb3() noexcept
 {
 
 }
@@ -110,4 +110,4 @@ taabb3<T> operator*(const taabb3<T>& a,const tvec3<T>& b){
     );
 }
 
-WYZ_MATH_END
+WZZ_MATH_END

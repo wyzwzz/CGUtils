@@ -6,7 +6,7 @@
 #include <tuple>
 #include "common.hpp"
 
-WYZ_MATH_BEGIN
+WZZ_MATH_BEGIN
 
 template <typename T, int D>
 class tvec{
@@ -25,5 +25,4 @@ public:
     const T& operator[](int idx) const noexcept;
 };
 
-
-WYZ_MATH_END
+WZZ_MATH_END

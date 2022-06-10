@@ -1,0 +1,8 @@
+//
+// Created by wyz on 2022/6/10.
+//
+
+#ifndef CGUTILS_COORD_FLOAT3_HPP
+#define CGUTILS_COORD_FLOAT3_HPP
+
+#endif // CGUTILS_COORD_FLOAT3_HPP
