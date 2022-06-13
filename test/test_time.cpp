@@ -1,9 +1,10 @@
 //
 // Created by wyz on 2021/7/23.
 //
-#include <CGUtils/timer.hpp>
+#include "CGUtils/time/timer.hpp"
 #include <windows.h>
-int main(int argc,char** argv){
+#include <gtest/gtest.h>
+TEST(test_time,test_auto_timer){
     AutoTimer auto_timer;
     Timer timer;
     timer.start();
@@ -17,5 +18,5 @@ int main(int argc,char** argv){
     _sleep(1234);
     timer.stop();
     timer.print_duration("ms");
-    return 0;
 }
+

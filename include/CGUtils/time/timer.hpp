@@ -128,7 +128,7 @@ private:
 };
 class AutoTimer: public Timer{
 public:
-    AutoTimer(const std::string& msg,const std::string& unit="ms")
+    AutoTimer(const std::string& msg="",const std::string& unit="ms")
       :msg(msg),unit(unit){
         start();
     }

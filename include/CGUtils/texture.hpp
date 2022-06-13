@@ -1,4 +1,6 @@
-//
-// Created by wyz on 2022/6/10.
-//
 #pragma once
+
+#include "texture/image2d.hpp"
+#include "texture/image3d.hpp"
+#include "texture/mipmap.hpp"
+#include "texture/sampler.hpp"
