@@ -31,6 +31,12 @@ class tvec4{
 
     self_t normalized() const noexcept;
 
+	template <typename F>
+	auto map(F&& f) const noexcept;
+
+	template <typename U>
+	auto convert_to() const noexcept;
+
     T& operator[](int idx) noexcept;
     const T& operator[](int idx) const noexcept;
 

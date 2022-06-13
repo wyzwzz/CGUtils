@@ -12,6 +12,8 @@
 #include "decl/mat4_c.hpp"
 #include "decl/aabb2.hpp"
 #include "decl/aabb3.hpp"
+#include "decl/tensor.hpp"
+#include "decl/tensor_view.hpp"
 #include "decl/simd/float3.hpp"
 
 #include "impl/vec.inl"
@@ -22,4 +24,6 @@
 #include "impl/mat4_c.inl"
 #include "impl/aabb2.inl"
 #include "impl/aabb3.inl"
+#include "impl/tensor.inl"
+#include "impl/tensor_view.inl"
 #include "impl/simd/float3.inl"

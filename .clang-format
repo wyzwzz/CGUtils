@@ -70,7 +70,7 @@ JavaScriptWrapImports: false
 DisableFormat: true
 ---
 Language: Cpp
-Standard: Cpp17
+Standard: c++17
 BraceWrapping:
   AfterClass: true
   AfterControlStatement: false

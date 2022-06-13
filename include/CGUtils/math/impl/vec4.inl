@@ -72,6 +72,19 @@ tvec4<T> tvec4<T>::normalized() const noexcept
 }
 
 template <typename T>
+template <typename F>
+auto tvec4<T>::map(F&& f) const noexcept{
+	using RT = remove_rcv_t<decltype(f(x))>;
+	return tvec4<RT>(f(x),f(y),f(z),f(w));
+}
+
+template <typename T>
+template <typename U>
+auto tvec4<T>::convert_to() const noexcept{
+	return tvec3<U>(U(x),U(y),U(z),U(w));
+}
+
+template <typename T>
 T& tvec4<T>::operator[](int idx) noexcept{
     return *(&x + idx);
 }

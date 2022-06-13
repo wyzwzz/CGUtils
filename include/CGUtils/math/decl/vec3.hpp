@@ -23,6 +23,8 @@ class tvec3{
 
     bool is_zero() const noexcept;
 
+	bool is_finite() const noexcept;
+
     auto length() const noexcept;
 
     auto length_square() const noexcept;
@@ -31,7 +33,13 @@ class tvec3{
 
     self_t normalized() const noexcept;
 
-    T& operator[](int idx) noexcept;
+	template <typename F>
+	auto map(F&& f) const noexcept;
+
+	template <typename U>
+	auto convert_to() const noexcept;
+
+	T& operator[](int idx) noexcept;
     const T& operator[](int idx) const noexcept;
 
     self_t& operator+=(const self_t& rhs) noexcept;
@@ -96,10 +104,18 @@ template <typename T>
 auto dot(const tvec3<T>& lhs, const tvec3<T>& rhs) noexcept;
 
 template <typename T>
+auto abs_dot(const tvec3<T>& lhs, const tvec3<T>& rhs) noexcept;
+
+
+template <typename T>
 auto cross(const tvec3<T>& lhs, const tvec3<T>& rhs) noexcept;
 
 template <typename T>
 auto cos(const tvec3<T>& lhs, const tvec3<T>& rhs) noexcept;
+
+template <typename T>
+auto abs_cos(const tvec3<T>& lhs, const tvec3<T>& rhs) noexcept;
+
 
 template <typename T>
 std::ostream& operator<<(std::ostream& out, const tvec3<T>& vec);

@@ -7,7 +7,7 @@ namespace wzz {
 
 struct uninitialized_t {};
 
-
-
+template <typename T>
+using remove_rcv_t = std::remove_cv_t<std::remove_reference_t<T>>;
 
 }

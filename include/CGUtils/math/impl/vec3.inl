@@ -47,6 +47,12 @@ bool tvec3<T>::is_zero() const noexcept
 }
 
 template <typename T>
+bool tvec3<T>::is_finite() const noexcept
+{
+	return is_finite(x) && is_finite(y) && is_finite(z);
+}
+
+template <typename T>
 auto tvec3<T>::length() const noexcept
 {
     return std::sqrt(length_square());
@@ -69,6 +75,19 @@ tvec3<T> tvec3<T>::normalized() const noexcept
 {
     static_assert(std::is_floating_point_v<T>, "must be float point");
     return *this / length();
+}
+
+template <typename T>
+template <typename F>
+auto tvec3<T>::map(F&& f) const noexcept{
+	using RT = remove_rcv_t<decltype(f(x))>;
+	return tvec3<RT>(f(x),f(y),f(z));
+}
+
+template <typename T>
+template <typename U>
+auto tvec3<T>::convert_to() const noexcept{
+	return tvec3<U>(U(x),U(y),U(z));
 }
 
 template <typename T>
@@ -234,6 +253,11 @@ auto dot(const tvec3<T>& lhs, const tvec3<T>& rhs) noexcept{
 }
 
 template <typename T>
+auto abs_dot(const tvec3<T>& lhs, const tvec3<T>& rhs) noexcept{
+    return std::abs(lhs.x*rhs.x + lhs.y*rhs.y + lhs.z*rhs.z);
+}
+
+template <typename T>
 auto cross(const tvec3<T>& lhs, const tvec3<T>& rhs) noexcept{
     return tvec3<T>(
         lhs.y * rhs.z - lhs.z * rhs.y,
@@ -244,6 +268,11 @@ auto cross(const tvec3<T>& lhs, const tvec3<T>& rhs) noexcept{
 template <typename T>
 auto cos(const tvec3<T>& lhs, const tvec3<T>& rhs) noexcept{
     return dot(lhs,rhs) / (lhs.length() * rhs.length());
+}
+
+template <typename T>
+auto abs_cos(const tvec3<T>& lhs, const tvec3<T>& rhs) noexcept{
+    return std::abs(dot(lhs,rhs) / (lhs.length() * rhs.length()));
 }
 
 template <typename T>
