@@ -20,7 +20,8 @@ namespace wzz::model{
         std::string name;
         std::vector<vertex_t> vertices;
         std::vector<uint32_t> indices;
-    };
+    	int material = -1;
+	};
 
     /**
      * @brief just load all triangle objects from file without other information
@@ -44,8 +45,8 @@ namespace wzz::model{
 
     struct model_t{
         std::string name;
-        std::shared_ptr<mesh_t> meshes;
-        std::shared_ptr<material_t> materials;
+        std::vector<mesh_t> meshes;
+        std::vector<material_t> materials;
     };
 
     /**

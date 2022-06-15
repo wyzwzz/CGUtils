@@ -61,4 +61,6 @@ TEST(test_math,test_tensor){
 	EXPECT_EQ(view.shape()[0],10);
 	EXPECT_EQ(view.shape()[1],5);
 
+
+
 }

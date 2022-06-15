@@ -12,6 +12,8 @@
 
 WZZ_MATH_BEGIN
 
+using byte = unsigned char;
+
 template <typename T>
 T clamp(T val, T min_v, T max_v) noexcept{
     return std::clamp(val,min_v,max_v);
