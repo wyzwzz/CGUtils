@@ -242,12 +242,12 @@ auto tensor_t<T, D>::map( F &&func ) const
 
 template <typename T, int D>
 template <typename F>
-void tensor_t<T, D>::map_inplace( F &&func )
+void tensor_t<T, D>::map_inplace( F &&func ) const
 {
 	if(!is_available())
 		return;
 	for(size_t i = 0; i < elem_cnt; ++i)
-		data[i] = func(data[i]);
+		func(data[i]);
 }
 
 template <typename T, int D>

@@ -1,8 +1,32 @@
-//
-// Created by wyz on 2022/6/10.
-//
+#pragma once
 
-#ifndef CGUTILS_MIPMAP2D_HPP
-#define CGUTILS_MIPMAP2D_HPP
+#include "image2d.hpp"
 
-#endif	// CGUTILS_MIPMAP2D_HPP
+namespace wzz::texture{
+
+template <typename T>
+class mipmap2d_t{
+public:
+	mipmap2d_t();
+
+	explicit mipmap2d_t(const image2d_t<T>& lod0_image);
+	explicit mipmap2d_t(image2d_t<T> lod0_image);
+
+	void generate(const image2d_t<T>& lod0_image);
+	void generate(image2d_t<T> lod0_image);
+
+	bool available() const noexcept;
+
+	void destroy();
+
+	int levels() const noexcept;
+
+	image2d_t<T>& get_level(int level) noexcept;
+
+	const image2d_t<T>& get_level(int level) const noexcept;
+
+private:
+	std::vector<image2d_t<T>> images;
+};
+
+}

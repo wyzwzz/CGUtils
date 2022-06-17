@@ -71,8 +71,9 @@ public:
 	template<typename F>
 	auto map(F &&func) const;
 
+	//use ref in F
 	template<typename F>
-	void map_inplace(F &&func);
+	void map_inplace(F &&func) const;
 
 	T *raw_data() noexcept;
 	const T *raw_data() const noexcept;

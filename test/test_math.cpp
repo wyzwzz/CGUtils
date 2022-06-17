@@ -38,7 +38,7 @@ TEST(test_math,test_tensor){
 			hdr_image(x,y) = vec3f(x + 1, y + 1, x + y);
 		}
 	}
-	hdr_image.map_inplace([](const vec3f& v)->vec3f{
+	hdr_image.map_inplace([](vec3f& v)->vec3f{
 		return v.normalized();
 	});
 	std::cout<<"hdr image elem_count: "<<hdr_image.elem_count()<<std::endl;
