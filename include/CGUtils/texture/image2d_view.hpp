@@ -1,0 +1,8 @@
+//
+// Created by wyz on 2022/6/17.
+//
+
+#ifndef CGUTILS_IMAGE2D_VIEW_HPP
+#define CGUTILS_IMAGE2D_VIEW_HPP
+
+#endif	// CGUTILS_IMAGE2D_VIEW_HPP

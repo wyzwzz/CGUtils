@@ -6,7 +6,7 @@
 #include "./vec2.hpp"
 #include "./vec3.hpp"
 #include "./vec4.hpp"
-#include "./color2.hpp"
+#include "color2.hpp"
 #include "./color3.hpp"
 #include "./color4.hpp"
 

@@ -1,10 +1,9 @@
-//
-// Created by wyz on 2022/2/14.
-//
 #pragma once
+
 #include <ostream>
 #include "common.hpp"
 #include "../../misc/hash.hpp"
+
 WZZ_MATH_BEGIN
 
 template <typename T>
