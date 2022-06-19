@@ -24,9 +24,17 @@ public:
 	tensor_view_t();
 	tensor_view_t(data_t data,const index_t& view_origin,const index_t& view_shape) noexcept;
 
+	template <bool CONST2,typename = std::enable_if_t<CONST || CONST == CONST2>>
+	tensor_view_t(const tensor_view_t<T,D,CONST2>& other) noexcept;
+
 	const index_t& shape() const noexcept;
 	auto& at(const index_t& index) noexcept;
 	auto& at(const index_t& index) const noexcept;
+
+
+	T& operator[](size_t index) noexcept;
+
+	const T& operator[](size_t index) const noexcept;
 
 	template <typename...Args,typename = std::enable_if_t<sizeof...(Args) == D>>
 	auto& operator()(Args... indices) noexcept;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CGUtils/math/decl/common.hpp"
+#include "common.hpp"
 
 WZZ_MATH_BEGIN
 template <typename T>

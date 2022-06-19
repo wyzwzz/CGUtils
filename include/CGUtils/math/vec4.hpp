@@ -2,7 +2,7 @@
 
 #include <ostream>
 #include "common.hpp"
-#include "../../misc/hash.hpp"
+#include "CGUtils/misc/hash.hpp"
 
 WZZ_MATH_BEGIN
 
@@ -51,7 +51,7 @@ class tvec4{
 
     tvec3<T> homogenize() const noexcept;
 
-#include "../impl/swizzle_vec4.inl"
+#include "CGUtils/math/impl/swizzle_vec4.inl"
 };
 
 template <typename T>

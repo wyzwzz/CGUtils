@@ -13,6 +13,8 @@ public:
 
 	explicit image2d_view_t(data_t data);
 
+	void swap(image2d_view_t& other);
+
 	int width() const noexcept;
 	int height() const noexcept;
 	math::vec2i size() const noexcept;
@@ -34,5 +36,6 @@ public:
 private:
 	data_t data;
 };
-
 }
+
+#include "./impl/image2d_view.inl"

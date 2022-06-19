@@ -1,7 +1,7 @@
 #pragma once
 #include <ostream>
 #include "common.hpp"
-#include "../../misc/hash.hpp"
+#include "CGUtils/misc/hash.hpp"
 WZZ_MATH_BEGIN
 
 template <typename T>
@@ -41,7 +41,7 @@ class tvec2{
     self_t& operator*=(T rhs) noexcept;
     self_t& operator/=(T rhs) noexcept;
 
-#include "../impl/swizzle_vec2.inl"
+#include "CGUtils/math/impl/swizzle_vec2.inl"
 };
 
 template <typename T>

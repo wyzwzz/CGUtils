@@ -21,8 +21,10 @@ TEST(test_math,test_vec3){
 }
 
 TEST(test_math,test_vec){
-	vec<float,5> v1(1,2,3,4,5);
+	vec<float,5> v1({1,2,3,4,5});
 	vec<float,5> v2(5,4,3,2,1);
+	vec<int,1> vv({1});
+	vec<int,5> v33({1,2,3,4,5});
 	v1 += v2;
 	vec<float,5> v3(6,6,6,6,6);
 	for(int i = 0;i < 5;i++)
@@ -38,8 +40,8 @@ TEST(test_math,test_tensor){
 			hdr_image(x,y) = vec3f(x + 1, y + 1, x + y);
 		}
 	}
-	hdr_image.map_inplace([](vec3f& v)->vec3f{
-		return v.normalized();
+	hdr_image.map_inplace([](vec3f& v){
+		v.normalize();
 	});
 	std::cout<<"hdr image elem_count: "<<hdr_image.elem_count()<<std::endl;
 	for(int i = 0; i < hdr_image.elem_count(); ++i){

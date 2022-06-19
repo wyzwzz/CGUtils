@@ -11,15 +11,29 @@ public:
 
 	//todo
 	using color_point_t = std::pair<T,math::tcolor4<T>>;
-	template<color_point_t>
-	void add_point(const color_point_t& color){
+
+// cpp20
+//	template<color_point_t>
+//	void add_point(const color_point_t& color){
+//		add_point(color.first,color.second);
+//	}
+//	template <color_point_t,typename... Args>
+//	void add_point(const color_point_t& color,Args... colors){
+//		add_point(color.first,color.second);
+//		add_point<Args...>(colors...);
+//	}
+
+	template<T>
+	void add_point(const T& color){
 		add_point(color.first,color.second);
 	}
-	template <color_point_t,typename... Args>
-	void add_point(const color_point_t& color,Args... colors){
+	template <typename T,typename... Args>
+	void add_point(const T& color,Args... colors){
 		add_point(color.first,color.second);
 		add_point<Args...>(colors...);
 	}
+
+
 
 	void add_point(T s,const math::tcolor4<T>& color);
 

@@ -13,6 +13,8 @@ public:
 
 	explicit image1d_view_t(data_t data);
 
+	void swap(image1d_view_t& other) noexcept;
+
 	int width() const noexcept;
 	int size() const noexcept;
 
@@ -35,3 +37,5 @@ private:
 };
 
 }
+
+#include "./impl/image1d_view.inl"

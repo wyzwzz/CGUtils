@@ -1,5 +1,5 @@
 #pragma once
-#include "../../common/common.hpp"
+#include "CGUtils/common/common.hpp"
 #include <algorithm>
 #include <type_traits>
 #include <cmath>

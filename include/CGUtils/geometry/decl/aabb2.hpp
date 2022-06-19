@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CGUtils/math/decl/vec2.hpp"
+#include "CGUtils/math/vec2.hpp"
 
 WZZ_MATH_BEGIN
 

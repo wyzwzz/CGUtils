@@ -29,6 +29,8 @@ public:
 	void initialize(int w,const T* src);
 	void initialize(int w,const T& init_val = T());
 
+	void swap(image1d_t& other);
+
 	void destroy();
 
 	bool is_available() const noexcept;
@@ -84,5 +86,6 @@ public:
 protected:
 	data_t data;
 };
-
 }
+
+#include "./impl/image1d.inl"

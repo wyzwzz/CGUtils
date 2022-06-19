@@ -29,6 +29,8 @@ public:
 	void initialize(int w,int h,int d,const T* src);
 	void initialize(int w,int h,int d,const T& init_val = T());
 
+	void swap(image3d_t& other);
+
 	void destroy();
 
 	bool is_available() const noexcept;
@@ -81,7 +83,6 @@ public:
 protected:
 	data_t data;
 };
-
-
-
 }
+
+#include "./impl/image3d.inl"

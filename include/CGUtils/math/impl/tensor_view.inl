@@ -1,6 +1,6 @@
 #pragma once
 
-#include <CGUtils/math/decl/tensor_view.hpp>
+#include "CGUtils/math/tensor_view.hpp"
 
 WZZ_MATH_BEGIN
 
@@ -14,6 +14,14 @@ tensor_view_t<T, D, CONST>::tensor_view_t()
 template <typename T, int D, bool CONST>
 tensor_view_t<T, D, CONST>::tensor_view_t( data_t data, const index_t &view_origin, const index_t &view_shape ) noexcept
 :data(data),origin(view_origin),shape_(view_shape)
+{
+
+}
+
+template <typename T, int D, bool CONST>
+template <bool CONST2, typename>
+tensor_view_t<T, D, CONST>::tensor_view_t( const tensor_view_t<T, D, CONST2> &other ) noexcept
+:data(other.data),origin(other.origin),shape_(other.shape_)
 {
 
 }
@@ -74,6 +82,18 @@ template <typename T, int D, bool CONST>
 typename tensor_view_t<T,D,CONST>::self_t tensor_view_t<T, D, CONST>::get_const_subview( const index_t &origin, const index_t &shape ) const
 {
 	return tensor_view_t<T,D,true>(data,this->origin + origin, shape);
+}
+template <typename T, int D, bool CONST>
+T &tensor_view_t<T, D, CONST>::operator[]( size_t index ) noexcept
+{
+	static_assert(D == 1,"D must be 1");
+	return data->operator[](origin[0] + index);
+}
+template <typename T, int D, bool CONST>
+const T &tensor_view_t<T, D, CONST>::operator[]( size_t index ) const noexcept
+{
+	static_assert(D == 1,"D must be 1");
+	return data->operator[](origin[0] + index);
 }
 
 WZZ_MATH_END

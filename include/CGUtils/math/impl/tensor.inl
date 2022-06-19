@@ -1,6 +1,6 @@
 #pragma once
 
-#include <CGUtils/math/decl/tensor.hpp>
+#include "CGUtils/math/tensor.hpp"
 #include <CGUtils/memory/alloc.hpp>
 #include <CGUtils/misc/scope_bomb.hpp>
 #include <cassert>
@@ -41,7 +41,7 @@ tensor_t<T, D>::tensor_t( const tensor_t::index_t &shape, F &&f )
 		std::allocator<T>().deallocate(d,elem_cnt);
 	});
 	for(size_t i = 0; i < elem_cnt; ++i,++constructed_count)
-		new(data+i) T(f(i));
+		new(d+i) T(f(i));
 	data = d;
 	bomb.dismiss();
 }
@@ -285,7 +285,6 @@ tensor_view_t<T, D, true> tensor_t<T, D>::get_const_subview( const tensor_t::ind
 {
 	return tensor_view_t<T, D, true>(this,origin,shape);
 }
-
 
 //===
 

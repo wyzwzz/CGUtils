@@ -4,16 +4,16 @@
 
 namespace wzz::texture{
 
-template <typename T>
+template <typename T,typename F = math::avg_value_t<T>>
 class mipmap3d_t{
 public:
 	mipmap3d_t();
 	
 	explicit mipmap3d_t(const image3d_t<T>& lod0_image);
-	explicit mipmap3d_t(image3d_t<T> lod0_image);
+	explicit mipmap3d_t(image3d_t<T>&& lod0_image);
 	
 	void generate(const image3d_t<T>& lod0_image);
-	void generate(image3d_t<T> lod0_image);
+	void generate(image3d_t<T>&& lod0_image);
 	
 	bool available() const noexcept;
 	
@@ -29,4 +29,8 @@ private:
 	std::vector<image3d_t<T>> images;
 };
 
+
 }
+
+
+#include "./impl/mipmap3d.inl"

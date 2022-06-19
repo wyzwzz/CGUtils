@@ -12,6 +12,8 @@ public:
 
 	explicit image3d_view_t(data_t data);
 
+	void swap(image3d_view_t& other);
+
 	int width() const noexcept;
 	int height() const noexcept;
 	int depth() const noexcept;
@@ -34,6 +36,5 @@ public:
 private:
 	data_t data;
 };
-
-
 }
+#include "./impl/image3d_view.inl"

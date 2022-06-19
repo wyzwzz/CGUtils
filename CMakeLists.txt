@@ -4,6 +4,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 option(BUILD_TEST "" OFF)
 
+option(BUILD_ENABLE_OPENGL "" ON)
+
 include(${PROJECT_SOURCE_DIR}/third_party/spdlog.cmake)
 
 file(
@@ -15,6 +17,12 @@ file(
 )
 
 add_library(CGUtils STATIC ${CGUTILS_SRCS})
+
+if(BUILD_ENABLE_OPENGL)
+add_compile_definitions(
+        WZZ_ENABLE_OPENGL
+)
+endif()
 
 target_link_libraries(
         CGUtils

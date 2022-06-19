@@ -1,6 +1,3 @@
-//
-// Created by wyz on 2021/7/5.
-//
 #include <iostream>
 #include <functional>
 #include <any>
