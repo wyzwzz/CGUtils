@@ -12,3 +12,9 @@
 #include "./api/opengl/uniform.hpp"
 #include "./api/opengl/vertex_array.hpp"
 #endif
+
+//WZZ_ENABLE_VULKAN
+
+//WZZ_ENABLE_D3D11
+
+//WZZ_ENABLE_D3D12

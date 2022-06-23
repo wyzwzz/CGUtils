@@ -44,6 +44,14 @@ target_compile_features(
 
 target_include_directories(CGUtils PUBLIC ${PROJECT_SOURCE_DIR}/ext/glad/include)
 
+add_subdirectory(ext/glfw)
+
+target_link_libraries(
+        CGUtils
+        PUBLIC
+        glfw
+)
+
 if(BUILD_TEST)
     add_subdirectory(test)
 endif()
