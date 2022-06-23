@@ -19,6 +19,9 @@
 #include "tensor_view.hpp"
 #include "simd/float3.hpp"
 #include "func.hpp"
+#include "coord.hpp"
+#include "transform2.hpp"
+#include "transform3.hpp"
 
 #include "impl/vec.inl"
 #include "impl/vec2.inl"
@@ -34,3 +37,6 @@
 #include "impl/tensor.inl"
 #include "impl/tensor_view.inl"
 #include "impl/simd/float3.inl"
+#include "impl/coord.inl"
+#include "impl/transform2.inl"
+#include "impl/transform3.inl"

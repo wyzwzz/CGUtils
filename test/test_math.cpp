@@ -63,6 +63,32 @@ TEST(test_math,test_tensor){
 	EXPECT_EQ(view.shape()[0],10);
 	EXPECT_EQ(view.shape()[1],5);
 
+}
 
-
+TEST(test_math,test_mat4_c_and_transform){
+	auto r = mat4f_c::left_transform::translate(1,2,3);
+	auto r1 = transform3f::translate(1,2,3);
+	auto r2 = transform3f::translate(-1,2,3);
+	r(2,1) = 5;
+	auto rr = r;
+	std::cout<<rr.get_row(0)<<std::endl;
+	std::cout<<rr.get_row(1)<<std::endl;
+	std::cout<<rr.get_row(2)<<std::endl;
+	std::cout<<rr.get_row(3)<<std::endl;
+	vec3f p(1,-2,-3);
+	p = r2.apply_to_point(p);
+	EXPECT_FLOAT_EQ(p.x,0);
+	EXPECT_FLOAT_EQ(p.y,0);
+	EXPECT_FLOAT_EQ(p.z,0);
+	p = r1.apply_to_point(p);
+	EXPECT_FLOAT_EQ(p.x,1);
+	EXPECT_FLOAT_EQ(p.y,2);
+	EXPECT_FLOAT_EQ(p.z,3);
+	vec3f d(1,0,0);
+	auto r3 = transform3f::rotate_z(PI_f);
+	d = r3.apply_to_vector(d);
+	EXPECT_FLOAT_EQ(d.x,-1.f);
+	EXPECT_NEAR(d.y,0.f,0.00001);
+	EXPECT_FLOAT_EQ(d.z,0.f);
+	std::cout<<d<<std::endl;
 }

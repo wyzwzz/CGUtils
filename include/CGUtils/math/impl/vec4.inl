@@ -28,7 +28,7 @@ tvec4<T>::tvec4(uninitialized_t) noexcept{}
 
 template <typename T>
 tvec4<T>::tvec4(const self_t& v) noexcept
-    :x(v.x),y(v.y),z(v.z),w(v.z)
+    :x(v.x),y(v.y),z(v.z),w(v.w)
 {
 
 }
