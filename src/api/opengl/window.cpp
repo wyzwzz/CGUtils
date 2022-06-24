@@ -87,6 +87,7 @@ namespace {
 struct window_t::Impl{
 	std::unique_ptr<GLFWwindow,GLFWWindowDeleter> window;
 	window_desc_t desc;
+	Impl() = default;
 	~Impl(){
 		destroy();
 	}
@@ -97,6 +98,7 @@ struct window_t::Impl{
 		if(!init_opengl_context()){
 			return false;
 		}
+		GL_EXPR(glEnable(GL_DEPTH_TEST));
 		if(!init_imgui_context()){
 			return false;
 		}
@@ -142,11 +144,12 @@ struct window_t::Impl{
 
 	bool init_imgui_context(){
 		IMGUI_CHECKVERSION();
-		ImGui::CreateContext();
+		if(!ImGui::CreateContext()) return false;
 
 		ImGui::StyleColorsDark();
-		ImGui_ImplGlfw_InitForOpenGL(window.get(), true);
-		ImGui_ImplOpenGL3_Init();
+		if(!ImGui_ImplGlfw_InitForOpenGL(window.get(), true)) return false;
+		if(!ImGui_ImplOpenGL3_Init()) return false;
+		return true;
 	}
 
 	void begin_imgui(){
@@ -292,9 +295,12 @@ void window_t::render_frame()
 
 void window_t::render_imgui()
 {
-	//default none
+
 }
 
+window_t::~window_t()
+{
 
+}
 
 }

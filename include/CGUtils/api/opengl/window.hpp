@@ -87,6 +87,8 @@ class window_t: public misc::no_copy_t{
 public:
 	explicit window_t(const window_desc_t& desc);
 
+	~window_t();
+
 	void run();
 
 	int width() const;

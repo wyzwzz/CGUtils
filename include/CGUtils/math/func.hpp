@@ -12,8 +12,8 @@
 
 WZZ_MATH_BEGIN
 
-template <typename T,typename std::enable_if_t<!std::is_floating_point_v<T>>>
-bool is_power_of_2(T v) noexcept{
+template <typename T,typename = std::enable_if_t<!std::is_floating_point_v<T>>>
+constexpr bool is_power_of_2(T v) noexcept{
 	return v > 0 && !(v & (v - 1));
 }
 

@@ -6,7 +6,7 @@
 
 namespace {
 #define STB_IMAGE_IMPLEMENTATION
-#include "../external/stb_image.h"
+#include "../ext/stb_image.h"
 }
 
 namespace wzz::image{

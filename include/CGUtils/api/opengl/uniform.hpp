@@ -13,9 +13,11 @@ namespace detail{
 	inline void set_uniform_value(GLint location, GLuint x) {GL_EXPR(glUniform1ui(location,x));}
 	inline void set_uniform_value(GLint location, const vec2i& v) {GL_EXPR(glUniform2i(location,v.x,v.y));}
 	inline void set_uniform_value(GLint location, const vec3i& v) {GL_EXPR(glUniform3i(location,v.x,v.y,v.z));}
-	inline void set_uniform_value(GLint location, const vec4i& v) {GL_EXPR(glUniform4i(location,v.x,v.y,v.z));}
-	inline void set_uniform_value(GLint location, const mat4& m, bool transpose = false) {GL_EXPR(glUniformMatrix4fv(location,1,transpose,&m));}
-	inline void set_uniform_value(GLint location, const texture_unit_t& unit) {GL_EXPR(glUniform1i(location,unit.unit));}
+	inline void set_uniform_value(GLint location, const vec4i& v) {GL_EXPR(glUniform4i(location,v.x,v.y,v.z,v.w));}
+	inline void set_uniform_value(GLint location, const mat4& m, bool transpose = false) {GL_EXPR(glUniformMatrix4fv(location,1,transpose,&m[0][0]));}
+	inline void set_uniform_value(GLint location, const texture1d_unit_t& unit) {GL_EXPR(glUniform1i(location,unit.unit));}
+	inline void set_uniform_value(GLint location, const texture2d_unit_t& unit) {GL_EXPR(glUniform1i(location,unit.unit));}
+	inline void set_uniform_value(GLint location, const texture3d_unit_t& unit) {GL_EXPR(glUniform1i(location,unit.unit));}
 
 }
 

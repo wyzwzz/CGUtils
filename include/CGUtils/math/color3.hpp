@@ -6,6 +6,9 @@ template <typename T>
 class tcolor3{
 public:
 	T r, g, b;
+	tcolor3();
+	explicit tcolor3(T v) noexcept;
+	tcolor3(T r, T g, T b) noexcept;
 
 	T& operator[](int idx) noexcept { return *(&r + idx);}
 	const T& operator[](int idx) const noexcept { return *(&r + idx);}

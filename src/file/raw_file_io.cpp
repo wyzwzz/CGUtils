@@ -7,7 +7,7 @@
 namespace wzz::file{
 
 std::vector<unsigned char> read_raw_file_bytes(const std::string& filename){
-	std::ifstream in(filename,std::ios::in | std::ios::binary | std::ios::end);
+	std::ifstream in(filename,std::ios::in | std::ios::binary | std::ios::ate);
 	if(!in.is_open()){
 		//todo replace with file open exception
 		throw std::runtime_error("open file failed: " + filename);

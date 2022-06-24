@@ -209,7 +209,7 @@ void image2d_t<T>::flip_vertically_inplace()
 	for(int y = 0; y < height() / 2; ++y){
 		int oy = height() - 1 - y;
 		for(int x = 0; x < width(); ++x)
-			swap(at(x,y),at(x,oy));
+			std::swap(at(x,y),at(x,oy));
 	}
 }
 

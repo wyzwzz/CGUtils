@@ -56,17 +56,17 @@ const typename image1d_view_t<T,CONST>::data_t &image1d_view_t<T, CONST>::get_da
 template <typename T, bool CONST>
 image1d_view_t<T,CONST> image1d_view_t<T, CONST>::sub_view( int beg_x, int end_x )
 {
-	return image1d_view_t(data.get_subview<T,CONST>({beg_x},{end_x - beg_x}));
+	return image1d_view_t(data.template get_subview<T,CONST>(math::tvec<int,1>{beg_x},math::tvec<int,1>{end_x - beg_x}));
 }
 template <typename T, bool CONST>
 image1d_view_t<T, true> image1d_view_t<T, CONST>::sub_view( int beg_x, int end_x ) const
 {
-	return image1d_view_t(data.get_subview<T,true>({beg_x},{end_x - beg_x}));
+	return image1d_view_t(data.template get_subview<T,true>(math::tvec<int,1>{beg_x},math::tvec<int,1>{end_x - beg_x}));
 }
 template <typename T, bool CONST>
 image1d_view_t<T, true> image1d_view_t<T, CONST>::sub_view_const( int beg_x, int end_x ) const
 {
-	return image1d_view_t(data.get_subview<T,true>({beg_x},{end_x - beg_x}));
+	return image1d_view_t(data.template get_subview<T,true>(math::tvec<int,1>{beg_x},math::tvec<int,1>{end_x - beg_x}));
 }
 
 }

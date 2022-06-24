@@ -21,15 +21,17 @@ class program_t:public gl_object_base_t{
 	program_t(GLuint handle) noexcept
 	 :gl_object_base_t(handle)
 	{
-		assert(!handle);
+		assert(handle);
 	}
 
 	template <GLenum... ShaderTypes>
 	friend program_t detail::build(const shader_t<ShaderTypes>&... shaders);
 public:
 
+	program_t() = default;
+
 	template <GLenum... ShaderTpyes>
-	program_t build_from(const shader_t<ShaderTpyes>&... shaders);
+	static program_t build_from(const shader_t<ShaderTpyes>&... shaders);
 
 	program_t(program_t&& other) noexcept
 	:gl_object_base_t(other.handle_)
@@ -192,7 +194,9 @@ namespace detail{
 			glGetProgramiv(handle,GL_INFO_LOG_LENGTH,&log);
 			std::vector<char> log_buf(log + 1);
 			glGetProgramInfoLog(handle,log_buf.size() + 1,nullptr,log_buf.data());
-			throw std::runtime_error(log_buf.data());
+			std::string info = "Program link info:\n";
+			info.append(log_buf.data(),log_buf.size());
+			throw std::runtime_error(info.data());
 		}
 
 		for(auto shader_handle:shader_handles){

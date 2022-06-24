@@ -56,7 +56,7 @@ public:
 	  attrib_var_t<Var> var, GLuint binding_point) noexcept
 	{
 		assert(handle_);
-		GL_EXPR(glVertexArrayAttribBinding(handle_, var.location(), binding_point));
+		GL_EXPR(glVertexArrayAttribBinding(handle_, var.get_location(), binding_point));
 	}
 
 
@@ -67,8 +67,8 @@ public:
 	{
 		assert(handle_);
 		GL_EXPR(glVertexArrayAttribFormat(
-		  handle_, var.location(),
-		  var_to_gl_type<Var>::usize, var_to_gl_type<Var>::utype,
+		  handle_, var.get_location(),
+		  var_to_gl_type<Var>::ncomp, var_to_gl_type<Var>::stype,
 		  normalized, byte_relative_offset));
 	}
 
@@ -83,12 +83,20 @@ public:
 		  GLintptr(vertex_offset * sizeof(Vertex)), GLsizei(sizeof(Vertex))));
 	}
 
+	//todo
+	template<typename T>
+	void bind_index_buffer(const index_buffer_t<T>& buf)
+	{
+		assert(handle_);
+		GL_EXPR(glVertexArrayElementBuffer(handle_,buf.handle()));
+	}
+
 
 	template<typename Var>
 	void enable_attrib(attrib_var_t<Var> var) noexcept
 	{
 		assert(handle_);
-		GL_EXPR(glEnableVertexArrayAttrib(handle_, var.location()));
+		GL_EXPR(glEnableVertexArrayAttrib(handle_, var.get_location()));
 	}
 
 	template<typename Vertex>

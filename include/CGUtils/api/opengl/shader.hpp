@@ -6,6 +6,16 @@
 
 namespace wzz::gl{
 
+inline std::string get_shader_type_name(GLenum T){
+	switch ( T ) {
+	case GL_VERTEX_SHADER: return "GL_VERTEX_SHADER";
+	case GL_FRAGMENT_SHADER: return "GL_FRAGMENT_SHADER";
+	case GL_GEOMETRY_SHADER: return "GL_GEOMETRY_SHADER";
+	case GL_COMPUTE_SHADER: return "GL_COMPUTE_SHADER";
+	default: return "UNKNOWN SHADER TYPE";
+	}
+}
+
 template<GLenum T>
 class shader_t: public gl_object_base_t{
 public:
@@ -46,10 +56,10 @@ public:
 	}
 
 	void load_from_file(const std::string& filename){
-		load_from_memory(file::read_txt_file(filename));
+		load_from_memory(file::read_txt_file(filename),filename);
 	}
 
-	void load_from_memory(std::string_view src){
+	void load_from_memory(std::string_view src,std::string filename = ""){
 		destroy();
 
 		GLuint new_handle = glCreateShader(ShaderType);
@@ -61,15 +71,18 @@ public:
 		GL_EXPR(glShaderSource(new_handle,1,&src_data,&src_size));
 
 		GLint ret;
-		GL_EXPR(glCompileShader(handle_));
-		GL_EXPR(glGetShaderiv(handle_,GL_COMPILE_STATUS,&ret));
+		GL_EXPR(glCompileShader(new_handle));
+		GL_EXPR(glGetShaderiv(new_handle,GL_COMPILE_STATUS,&ret));
 		if(ret != GL_TRUE){
 			GLint log;
 			GL_EXPR(glGetShaderiv(new_handle,GL_INFO_LOG_LENGTH,&log));
 			std::vector<char> log_buf(log + 1);
-			GL_EXPR(glGetShaderInfoLog(handle_,log + 1, nullptr, log_buf.data()));
+			GL_EXPR(glGetShaderInfoLog(new_handle,log + 1, nullptr, log_buf.data()));
 			GL_EXPR(glDeleteShader(new_handle));
-			throw std::runtime_error(log_buf.data());
+			filename = get_shader_type_name(T) + "Compile Info:\n" +
+					   filename + "\n";
+			filename.append(log_buf.data(),log_buf.size());
+			throw std::runtime_error(filename.data());
 		}
 		handle_ = new_handle;
 	}

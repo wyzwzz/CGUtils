@@ -240,7 +240,7 @@ template<typename T>
 tmat4_c<T> tmat4_c<T>::left_transform::rotate(
     const tvec3<T> &_axis, T rad) noexcept
 {
-	const auto axis = _axis.normalize();
+	const auto axis = _axis.normalized();
 	const T sinv = std::sin(rad), cosv = std::cos(rad);
 
 	self_t ret(uninitialized_t{});
@@ -346,8 +346,8 @@ tmat4_c<T> tmat4_c<T>::left_transform::orthographic(T left, T right, T top, T bo
 template <typename T>
 tmat4_c<T> tmat4_c<T>::left_transform::look_at(const tvec3<T> &eye, const tvec3<T> &dst, const tvec3<T> &up) noexcept
 {
-	auto D = (dst - eye).normalize();
-	auto R = cross(up, D).normalize();
+	auto D = (dst - eye).normalized();
+	auto R = cross(up, D).normalized();
 	auto U = cross(D, R);
 	return self_t(R.x, U.x, D.x, eye.x,
 				   R.y, U.y, D.y, eye.y,
@@ -375,7 +375,7 @@ template<typename T>
 tmat4_c<T> tmat4_c<T>::right_transform::rotate(
   const tvec3<T> &_axis, T rad) noexcept
 {
-	const auto axis = _axis.normalize();
+	const auto axis = _axis.normalized();
 	const T sinv = std::sin(rad), cosv = std::cos(rad);
 
 	self_t ret(uninitialized_t{});
@@ -462,7 +462,7 @@ tmat4_c<T> tmat4_c<T>::right_transform::perspective(T fov_y_rad, T w_over_h, T n
 	return self_t(cot / w_over_h, 0,   0,                                 0,
 				   0,              cot, 0,                                 0,
 				   0,              0,   far_plane * inv_dis,               1,
-				   0,              0,   -far_plane * near_plane * inv_dis, 0);
+				   0,              0,   -far_plane * near_plane * inv_dis, 0).transpose();
 }
 
 template <typename T>
@@ -474,20 +474,21 @@ tmat4_c<T> tmat4_c<T>::right_transform::orthographic(T left, T right, T top, T b
 	return self_t(2 / (right - left),              0,                               0,                         0,
 				   0,                               2 / (top - bottom),              0,                         0,
 				   0,                               0,                               1 / (far_z - near_z),      0,
-				   (left + right) / (left - right), (bottom + top) / (bottom - top), near_z / (near_z - far_z), 1);
+				   (left + right) / (left - right), (bottom + top) / (bottom - top), near_z / (near_z - far_z), 1).transpose();
 
 }
 
+//https://github.com/g-truc/glm/blob/master/glm/ext/matrix_transform.inl
 template <typename T>
 tmat4_c<T> tmat4_c<T>::right_transform::look_at(const tvec3<T> &eye, const tvec3<T> &dst, const tvec3<T> &up) noexcept
 {
-	auto D = (dst - eye).normalize();
-	auto R = cross(up, D).normalize();
-	auto U = cross(D, R);
+	auto D = (dst - eye).normalized();
+	auto R = cross(D, up).normalized();
+	auto U = cross(R, D);
 	return self_t(R.x, U.x, D.x, eye.x,
 				   R.y, U.y, D.y, eye.y,
 				   R.z, U.z, D.z, eye.z,
-				   0, 0, 0, 1).inverse().transpose();
+				   0, 0, 0, 1).inverse();
 }
 
 

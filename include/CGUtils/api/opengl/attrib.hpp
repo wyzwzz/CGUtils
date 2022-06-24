@@ -16,6 +16,7 @@ public:
 	GLuint get_location() const noexcept{
 		return location;
 	}
+
 };
 
 }
