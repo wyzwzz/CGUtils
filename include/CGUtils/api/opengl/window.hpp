@@ -88,14 +88,14 @@ public:
 	explicit window_t(const window_desc_t& desc);
 
 	void run();
+
+	int width() const;
+
+	int height() const;
 protected:
 	virtual void render_frame();
 
 	virtual void render_imgui();
-private:
-	void begin_imgui();
-
-	void end_imgui();
 
 protected:
 	EventListenerTraits event_listener;
