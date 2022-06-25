@@ -4,6 +4,7 @@
 #include "image1d.hpp"
 #include "image2d.hpp"
 #include "image3d.hpp"
+
 namespace wzz::texture{
 
 struct linear_sampler_t{

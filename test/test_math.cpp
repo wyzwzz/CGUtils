@@ -10,6 +10,31 @@
 
 using namespace wzz::math;
 
+TEST(test_math,test_color2){
+	color2f c;
+	c.rg();
+	c.rr();
+	c.gg();
+	c.gr();
+}
+
+TEST(test_math,test_color3){
+	color3f c(1,2,3);
+	auto c2 = c.rgb();
+	EXPECT_EQ(c,c2);
+	auto c3 = c.bgr();
+	c3 = c3.bgr();
+	EXPECT_EQ(c3,c2);
+}
+
+TEST(test_math,test_color4){
+	color4f c(1,2,3,4);
+	auto c2 = c.rgba();
+	EXPECT_EQ(c,c2);
+	auto c3 = c.abgr().abgr();
+	EXPECT_EQ(c3,c);
+}
+
 TEST(test_math,test_vec3){
     vec3f v1(1,2,3);
     v1.normalize();
@@ -17,7 +42,7 @@ TEST(test_math,test_vec3){
 	v1.map([](const vec3f &v){
 		return vec3d(v.x,v.y,v.z);
 	});
-
+	auto v2 = v1.xxx();
 }
 
 TEST(test_math,test_vec){

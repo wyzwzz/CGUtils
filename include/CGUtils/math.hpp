@@ -1,7 +1,37 @@
-//
-// Created by wyz on 2022/2/14.
-//
-
 #pragma once
 
-#include "math/math.hpp"
+#include "./math/vec.hpp"
+#include "./math/vec2.hpp"
+#include "./math/vec3.hpp"
+#include "./math/vec4.hpp"
+#include "./math/color2.hpp"
+#include "./math/color3.hpp"
+#include "./math/color4.hpp"
+#include "./math/mat3_c.hpp"
+#include "./math/mat4_c.hpp"
+#include "./math/coord.hpp"
+#include "./math/transform2.hpp"
+#include "./math/transform3.hpp"
+
+#include "./math/tensor.hpp"
+#include "./math/tensor_view.hpp"
+#include "./math/func.hpp"
+#include "./math/sampling.hpp"
+#include "./math/simd/float3.hpp"
+
+#include "./math/impl/vec.inl"
+#include "./math/impl/vec2.inl"
+#include "./math/impl/vec3.inl"
+#include "./math/impl/vec4.inl"
+#include "./math/impl/color2.inl"
+#include "./math/impl/color3.inl"
+#include "./math/impl/color4.inl"
+#include "./math/impl/mat3_c.inl"
+#include "./math/impl/mat4_c.inl"
+#include "./math/impl/coord.inl"
+#include "./math/impl/transform2.inl"
+#include "./math/impl/transform3.inl"
+#include "./math/impl/tensor.inl"
+#include "./math/impl/tensor_view.inl"
+#include "./math/impl/simd/float3.inl"
+

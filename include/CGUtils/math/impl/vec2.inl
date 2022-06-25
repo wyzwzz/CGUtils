@@ -1,5 +1,7 @@
 #pragma once
+
 #include <cmath>
+
 WZZ_MATH_BEGIN
 
 template <typename T>
@@ -69,6 +71,13 @@ tvec2<T> tvec2<T>::normalized() const noexcept
 {
     static_assert(std::is_floating_point_v<T>, "must be float point");
     return *this / length();
+}
+
+template <typename T>
+template <typename U>
+auto tvec2<T>::convert_to() const noexcept
+{
+	return tvec2<U>(U(x),U(y));
 }
 
 template <typename T>

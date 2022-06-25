@@ -18,14 +18,6 @@ class tmat4_c{
 
     tmat4_c() noexcept;
     explicit tmat4_c(uninitialized_t) noexcept;
-//	tmat4_c(const tmat4_c& other)
-//	{
-//		data[0] = other.data[0];
-//		data[1] = other.data[1];
-//		data[2] = other.data[2];
-//		data[3] = other.data[3];
-//	}
-//	tmat4_c& operator=(const tmat4_c&) = default;
 
     tmat4_c(T m00, T m01, T m02, T m03,
             T m10, T m11, T m12, T m13,
@@ -100,9 +92,7 @@ class tmat4_c{
 
         static self_t look_at(const tvec3<T> &eye, const tvec3<T> &dst, const tvec3<T> &up) noexcept;
     };
-	/**
-	 * @note matrix returned is already transposed so usage should be: V * M
-	 */
+
 	 struct right_transform{
 		 static self_t translate(const tvec3<T> &offset) noexcept;
 		 static self_t translate(T x, T y, T z) noexcept;

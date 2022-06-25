@@ -28,6 +28,9 @@ class tvec2{
 
     self_t normalized() const noexcept;
 
+	template <typename U>
+	auto convert_to() const noexcept;
+
     T& operator[](int idx) noexcept;
     const T& operator[](int idx) const noexcept;
 
@@ -41,7 +44,10 @@ class tvec2{
     self_t& operator*=(T rhs) noexcept;
     self_t& operator/=(T rhs) noexcept;
 
-#include "CGUtils/math/impl/swizzle_vec2.inl"
+#define SWIZZLE2(A, B)       tvec2<T> A##B()       const { return tvec2<T>(A, B); }
+	SWIZZLE2(x, x) SWIZZLE2(x, y) SWIZZLE2(y, y) SWIZZLE2(y, x)
+#undef SWIZZLE2
+
 };
 
 template <typename T>

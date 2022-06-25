@@ -1,7 +1,9 @@
 #pragma once
+
 #include <ostream>
 #include "common.hpp"
 #include "CGUtils/misc/hash.hpp"
+
 WZZ_MATH_BEGIN
 
 template <typename T>

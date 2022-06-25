@@ -1,5 +1,7 @@
 #pragma once
+
 #include <cmath>
+
 WZZ_MATH_BEGIN
 
 template <typename T>
