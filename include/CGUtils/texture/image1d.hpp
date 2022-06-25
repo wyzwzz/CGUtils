@@ -12,7 +12,7 @@ public:
 	image1d_t() = default;
 	image1d_t(int w,uninitialized_t);
 	image1d_t(int w,const T* src);
-	image1d_t(int w,const T& init_val = T());
+	explicit image1d_t(int w,const T& init_val = T());
 
 	explicit image1d_t(const data_t& other);
 	explicit image1d_t(data_t&& other) noexcept;
