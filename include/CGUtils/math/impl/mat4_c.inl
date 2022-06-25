@@ -358,10 +358,10 @@ tmat4_c<T> tmat4_c<T>::left_transform::look_at(const tvec3<T> &eye, const tvec3<
 template <typename T>
 tmat4_c<T> tmat4_c<T>::right_transform::translate(T x, T y, T z) noexcept
 {
-	return self_t(1, 0, 0, 0,
-				   0, 1, 0, 0,
-				   0, 0, 1, 0,
-				   x, y, z, 1);
+	return self_t(1, 0, 0, x,
+				   0, 1, 0, y,
+				   0, 0, 1, z,
+				   0, 0, 0, 1);
 }
 
 template <typename T>
@@ -400,7 +400,7 @@ tmat4_c<T> tmat4_c<T>::right_transform::rotate(
 	ret[2][3] = 0;
 	ret[3][3] = 1;
 
-	return ret;
+	return ret.transpose();
 }
 
 template<typename T>

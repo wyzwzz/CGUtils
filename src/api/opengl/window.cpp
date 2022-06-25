@@ -129,6 +129,7 @@ struct window_t::Impl{
 		glfwSetKeyCallback(window.get(),glfwKeyCallback);
 		glfwSetDropCallback(window.get(),glfwDropFileCallback);
 		glfwSetScrollCallback(window.get(),glfwMouseScrollCallback);
+		glfwSetCursorPosCallback(window.get(),glfwCursorPosCallback);
 		glfwSetMouseButtonCallback(window.get(),glfwMouseButtonCallback);
 		glfwSetFramebufferSizeCallback(window.get(),glfwFramebufferSizeCallback);
 		return true;
