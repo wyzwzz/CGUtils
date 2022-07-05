@@ -14,6 +14,10 @@ namespace wzz::gl{
 	using vec3 = math::vec3f;
 	using vec4 = math::vec4f;
 
+	using vec2f = math::vec2f;
+	using vec3f = math::vec3f;
+	using vec4f = math::vec4f;
+
 	using vec2i = math::vec2i;
 	using vec3i = math::vec3i;
 	using vec4i = math::vec4i;

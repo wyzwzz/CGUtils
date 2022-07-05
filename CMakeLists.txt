@@ -54,4 +54,7 @@ target_link_libraries(
 
 if(BUILD_TEST)
     add_subdirectory(test)
+
+    add_subdirectory(tool_test)
+
 endif()

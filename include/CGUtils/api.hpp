@@ -11,7 +11,7 @@
 #include "./api/opengl/texture.hpp"
 #include "./api/opengl/uniform.hpp"
 #include "./api/opengl/vertex_array.hpp"
-#include "./api/opengl/window.hpp"
+#include "./api/opengl/_window.hpp"
 #endif
 
 //WZZ_ENABLE_VULKAN
