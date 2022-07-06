@@ -12,6 +12,9 @@
 #include "./api/opengl/uniform.hpp"
 #include "./api/opengl/vertex_array.hpp"
 #include "./api/opengl/_window.hpp"
+#include "./api/opengl/window.hpp"
+#include "./api/opengl/demo.hpp"
+#include "./api/opengl/camera.hpp"
 #endif
 
 //WZZ_ENABLE_VULKAN

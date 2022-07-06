@@ -49,8 +49,6 @@ public:
 
 	void set_scroll(int offset);
 
-	void set_cursor_pos(double x,double y);
-
 private:
 	std::bitset<3> pre_frame_table;
 	std::bitset<3> cur_frame_table;
@@ -62,63 +60,63 @@ private:
 	bool show = true;
 	GLFWwindow* glfw_window;
 };
-mouse_t::~mouse_t()
+inline mouse_t::~mouse_t()
 {
 	if(!show)
 		show_cursor(true);
 }
-bool mouse_t::is_down( mouse_button_t button ) const noexcept
+inline bool mouse_t::is_down( mouse_button_t button ) const noexcept
 {
 	return !pre_frame_table[button] && cur_frame_table[button];
 }
-bool mouse_t::is_up( mouse_button_t button ) const noexcept
+inline bool mouse_t::is_up( mouse_button_t button ) const noexcept
 {
 	return pre_frame_table[button] && !cur_frame_table[button];
 }
-bool mouse_t::is_pressed( mouse_button_t button ) const noexcept
+inline bool mouse_t::is_pressed( mouse_button_t button ) const noexcept
 {
-	return pre_frame_table[button] && cur_frame_table[button];
+	return  cur_frame_table[button];
 }
-double mouse_t::get_cursor_x() const noexcept
+inline double mouse_t::get_cursor_x() const noexcept
 {
 	return cur_x;
 }
-double mouse_t::get_cursor_y() const noexcept
+inline double mouse_t::get_cursor_y() const noexcept
 {
 	return cur_y;
 }
-double mouse_t::get_delta_cursor_x() const noexcept
+inline double mouse_t::get_delta_cursor_x() const noexcept
 {
 	return rel_x;
 }
-double mouse_t::get_delta_cursor_y() const noexcept
+inline double mouse_t::get_delta_cursor_y() const noexcept
 {
 	return rel_y;
 }
-double mouse_t::get_cursor_lock_x() const noexcept
+inline double mouse_t::get_cursor_lock_x() const noexcept
 {
 	return lock_x;
 }
-double mouse_t::get_cursor_lock_y() const noexcept
+inline double mouse_t::get_cursor_lock_y() const noexcept
 {
 	return lock_y;
 }
-void mouse_t::set_cursor_lock( bool lock, double lock_x, double lock_y )
+inline void mouse_t::set_cursor_lock( bool lock, double lock_x, double lock_y )
 {
 	is_locked = lock;
 	this->lock_x = lock_x;
 	this->lock_y = lock_y;
 }
-bool mouse_t::is_cursor_locked() const noexcept
+inline bool mouse_t::is_cursor_locked() const noexcept
 {
 	return is_locked;
 }
 
-bool mouse_t::is_cursor_visible() const noexcept
+inline bool mouse_t::is_cursor_visible() const noexcept
 {
 	return show;
 }
-void mouse_t::clear()
+inline void mouse_t::clear()
 {
 	pre_frame_table.reset();
 	cur_frame_table.reset();
@@ -129,36 +127,27 @@ void mouse_t::clear()
 	if(!show)
 		show_cursor(true);
 }
-void mouse_t::set_window( GLFWwindow *window )
+inline void mouse_t::set_window( GLFWwindow *window )
 {
 	glfw_window = window;
 }
-void mouse_t::update()
-{
-}
-void mouse_t::set_mouse_button_down( mouse_button_t button )
+
+inline void mouse_t::set_mouse_button_down( mouse_button_t button )
 {
 	if(!is_pressed(button)){
 		cur_frame_table[button] = true;
 	}
 }
-void mouse_t::set_mouse_button_up( mouse_button_t button )
+inline void mouse_t::set_mouse_button_up( mouse_button_t button )
 {
 	if( is_pressed(button)){
 		cur_frame_table[button] = false;
 	}
 }
-void mouse_t::set_scroll( int offset )
+inline void mouse_t::set_scroll( int offset )
 {
 
 }
-void mouse_t::set_cursor_pos( double x, double y )
-{
-	rel_x = x - cur_x;
-	rel_y = y - cur_y;
-	cur_x = x;
-	cur_y = y;
 
-}
 
 }

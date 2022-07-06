@@ -32,7 +32,7 @@ inline bool keyboard_t::is_up( keycode_t key ) const noexcept
 }
 inline bool keyboard_t::is_pressed( keycode_t key ) const noexcept
 {
-	return pre_frame_table[key] && cur_frame_table[key];
+	return cur_frame_table[key];
 }
 inline void keyboard_t::clear()
 {
@@ -41,13 +41,13 @@ inline void keyboard_t::clear()
 }
 inline void keyboard_t::update_cur_frame()
 {
-	cur_frame_table = pre_frame_table;
+	pre_frame_table = cur_frame_table;
 }
 inline void keyboard_t::set_key_down( keycode_t key )
 {
 	if(!is_pressed(key)){
 		cur_frame_table[key] = true;
-
+		LOG_INFO("key down: {}",key);
 	}
 }
 inline void keyboard_t::set_key_up( keycode_t key )

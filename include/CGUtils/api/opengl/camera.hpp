@@ -3,7 +3,7 @@
 namespace wzz::gl{
 
 
-class Camera
+class fps_camera_t
 {
 public:
 
@@ -21,7 +21,7 @@ public:
 		float cursor_rel_y = 0;
 	};
 
-	Camera() noexcept;
+	fps_camera_t() noexcept;
 
 	void set_position(const vec3f &position) noexcept;
 
@@ -45,7 +45,15 @@ public:
 
 	const vec3f &get_position() const noexcept;
 
+	/**
+	 * @return {hori_radians,vert_radians}
+	 */
 	vec2f get_direction() const noexcept;
+
+	/**
+	 * @return normalized direction in xyz-coord
+	 */
+	vec3f get_xyz_direction() const noexcept;
 
 	const mat4 &get_view() const noexcept;
 
@@ -55,20 +63,19 @@ public:
 
 private:
 
-	vec3f compute_direction() const;
 
 	vec3f pos;
-	float vert_rad;
-	float hori_rad;
+	float vert_rad = 0.f;
+	float hori_rad = 0.f;
 
-	float fov_deg;
-	float near_z;
-	float far_z;
+	float fov_deg = 60.f;
+	float near_z = 0.1f;
+	float far_z = 100.f;
 
-	float w_over_h;
+	float w_over_h = 1;
 
-	float move_speed;
-	float cursor_speed;
+	float move_speed = 0.02f;
+	float cursor_speed = 0.003f;
 
 	mat4 view;
 	mat4 proj;

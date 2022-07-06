@@ -29,6 +29,8 @@ namespace wzz::gl{
 	using mat3 = math::mat3f_c;
 	using mat4 = math::mat4f_c;
 
+	using transform = mat4::right_transform;
+
 	inline std::string GetGLErrorStr(GLenum gl_error)
 	{
 		std::string error;

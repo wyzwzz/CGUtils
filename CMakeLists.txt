@@ -57,4 +57,6 @@ if(BUILD_TEST)
 
     add_subdirectory(tool_test)
 
+    add_subdirectory(graphics_api_test)
+
 endif()

@@ -1,307 +1,423 @@
+#pragma once
+#include <array>
 #include <CGUtils/api/opengl/window.hpp>
 #include <CGUtils/api/imgui/imgui.h>
 #include <CGUtils/api/imgui/imgui_impl_glfw.h>
 #include <CGUtils/api/imgui/imgui_impl_opengl3.h>
 #include <GLFW/glfw3.h>
-#include <iostream>
+
 namespace wzz::gl{
 
-namespace {
-	window_t* g_window = nullptr;
-
-	struct GLFWWindowDeleter
-	{
-		void operator()( GLFWwindow *p ) const
-		{
-			glfwDestroyWindow( p );
-		}
-	};
-	key_button_t transform_key(int key, int scancode, int mods){
-		switch ( key )
-		{
-		case GLFW_KEY_0: return Key_0;
-		case GLFW_KEY_1: return Key_1;
-		case GLFW_KEY_2: return Key_2;
-		case GLFW_KEY_3: return Key_3;
-		case GLFW_KEY_4: return Key_4;
-		case GLFW_KEY_5: return Key_5;
-		case GLFW_KEY_6: return Key_6;
-		case GLFW_KEY_7: return Key_7;
-		case GLFW_KEY_8: return Key_8;
-		case GLFW_KEY_9: return Key_9;
-		case GLFW_KEY_A: return Key_A;
-		case GLFW_KEY_B: return Key_B;
-		case GLFW_KEY_C: return Key_C;
-		case GLFW_KEY_D: return Key_D;
-		case GLFW_KEY_E: return Key_E;
-		case GLFW_KEY_F: return Key_F;
-		case GLFW_KEY_G: return Key_G;
-		case GLFW_KEY_H: return Key_H;
-		case GLFW_KEY_I: return Key_I;
-		case GLFW_KEY_J: return Key_J;
-		case GLFW_KEY_K: return Key_K;
-		case GLFW_KEY_L: return Key_L;
-		case GLFW_KEY_M: return Key_M;
-		case GLFW_KEY_N: return Key_N;
-		case GLFW_KEY_O: return Key_O;
-		case GLFW_KEY_P: return Key_P;
-		case GLFW_KEY_Q: return Key_Q;
-		case GLFW_KEY_R: return Key_R;
-		case GLFW_KEY_S: return Key_S;
-		case GLFW_KEY_T: return Key_T;
-		case GLFW_KEY_U: return Key_U;
-		case GLFW_KEY_V: return Key_V;
-		case GLFW_KEY_W: return Key_W;
-		case GLFW_KEY_X: return Key_X;
-		case GLFW_KEY_Y: return Key_Y;
-		case GLFW_KEY_Z: return Key_Z;
-
-		case GLFW_KEY_RIGHT: return Key_Right;
-		case GLFW_KEY_LEFT: return Key_Left;
-		case GLFW_KEY_DOWN: return Key_Down;
-		case GLFW_KEY_UP: return Key_Up;
-
-		case GLFW_KEY_ESCAPE: return Key_Esc;
-
-		case GLFW_KEY_KP_0: return Key_0;
-		case GLFW_KEY_KP_1: return Key_1;
-		case GLFW_KEY_KP_2: return Key_2;
-		case GLFW_KEY_KP_3: return Key_3;
-		case GLFW_KEY_KP_4: return Key_4;
-		case GLFW_KEY_KP_5: return Key_5;
-		case GLFW_KEY_KP_6: return Key_6;
-		case GLFW_KEY_KP_7: return Key_7;
-		case GLFW_KEY_KP_8: return Key_8;
-		case GLFW_KEY_KP_9: return Key_9;
-		default: std::cerr<<"unsupported key: "<<key<<std::endl;
-		}
-		return key_button_t::Key_Unknown;
-	}
-	bool check_valid_desc(const window_desc_t& desc){
-		if(desc.res.x <= 0 || desc.res.y <= 0) return false;
-
-		return true;
-	}
-}
-
 struct window_t::Impl{
-	std::unique_ptr<GLFWwindow,GLFWWindowDeleter> window;
-	window_desc_t desc;
-	Impl() = default;
-	~Impl(){
-		destroy();
-	}
-	bool init_window(){
-		if(!init_window_context()){
-			return false;
-		}
-		if(!init_opengl_context()){
-			return false;
-		}
-		GL_EXPR(glEnable(GL_DEPTH_TEST));
-		if(!init_imgui_context()){
-			return false;
-		}
-		return true;
-	}
 
-	bool init_window_context(){
-		if(glfwInit() == GLFW_FALSE){
-			std::cerr<<"failed to init glfw"<<std::endl;
-			return false;
-		}
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-		glfwWindowHint(GLFW_DOUBLEBUFFER, true);
+	GLFWwindow* glfw_window = nullptr;
 
-		auto p_window = glfwCreateWindow(desc.res.x,desc.res.y,desc.title.c_str(),nullptr,nullptr);
-		if(!p_window){
-			std::cerr<<"create glfw window failed"<<std::endl;
-			return false;
-		}
-		window.reset(p_window);
-		//note in multi-threading context
-		glfwMakeContextCurrent(window.get());
+	bool vsync = false;
+	bool close = false;
+	bool focus = false;
 
-		glfwSwapInterval(desc.vsync);
+	vec2i framebuffer_size;
 
-		glfwSetKeyCallback(window.get(),glfwKeyCallback);
-		glfwSetDropCallback(window.get(),glfwDropFileCallback);
-		glfwSetScrollCallback(window.get(),glfwMouseScrollCallback);
-		glfwSetCursorPosCallback(window.get(),glfwCursorPosCallback);
-		glfwSetMouseButtonCallback(window.get(),glfwMouseButtonCallback);
-		glfwSetFramebufferSizeCallback(window.get(),glfwFramebufferSizeCallback);
-		return true;
-	}
+	keyboard_t keyboard;
 
-	bool init_opengl_context(){
-		if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
-			std::cerr<<"glad load opengl failed"<<std::endl;
-			return false;
-		}
-		return true;
-	}
+	mouse_t mouse;
 
-	bool init_imgui_context(){
-		IMGUI_CHECKVERSION();
-		if(!ImGui::CreateContext()) return false;
-
-		ImGui::StyleColorsDark();
-		if(!ImGui_ImplGlfw_InitForOpenGL(window.get(), true)) return false;
-		if(!ImGui_ImplOpenGL3_Init()) return false;
-		return true;
-	}
-
-	void begin_imgui(){
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
-		ImGui::NewFrame();
-	}
-	void end_imgui(){
-		ImGui::EndFrame();
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-	}
-
-	bool get_close_flag(){
-		return glfwWindowShouldClose(window.get());
-	}
-
-	void dispach_event(){
-		glfwPollEvents();
-	}
-
-	void swap_buffer(){
-		glfwSwapBuffers(window.get());
-	}
-
-	void destroy(){
-		ImGui_ImplOpenGL3_Shutdown();
-		ImGui_ImplGlfw_Shutdown();
-		ImGui::DestroyContext(ImGui::GetCurrentContext());
-		window.reset();
-		glfwTerminate();
-	}
-
-	static void glfwCursorPosCallback(GLFWwindow* window,double xpos, double ypos){
-		assert(g_window);
-		if(!g_window->event_listener.mouse_event) return;
-		g_window->event_listener.mouse_event(window,Mouse_Left,Move,xpos,ypos);
-	}
-	static void glfwMouseButtonCallback(GLFWwindow* window,int button,int action,int mods){
-		assert(g_window);
-		if(!g_window->event_listener.mouse_event) return;
-		double xpos, ypos;
-		glfwGetCursorPos( window, &xpos, &ypos );
-		int buttons = 0;
-		int ea = 0;
-		if(action == GLFW_PRESS)
-			ea = Press;
-		else if(action == GLFW_RELEASE)
-			ea = Release;
-		else if(action == GLFW_REPEAT)
-			ea = Repeat;
-		if(button == GLFW_MOUSE_BUTTON_RIGHT)
-			buttons |= Mouse_Right;
-		if(button == GLFW_MOUSE_BUTTON_LEFT)
-			buttons |= Mouse_Left;
-		g_window->event_listener.mouse_event(window,(mouse_button_t)buttons,(event_action_t)ea,(int)xpos,(int)ypos);
-	}
-	static void glfwFramebufferSizeCallback(GLFWwindow* window,int width,int height){
-		assert(g_window);
-		if(!g_window->event_listener.framebuffer_resize_event) return;
-		g_window->event_listener.framebuffer_resize_event(window,width,height);
-	}
-	static void glfwMouseScrollCallback(GLFWwindow* window,double xoffset,double yoffset){
-		assert(g_window);
-		if(!g_window->event_listener.scroll_event) return;
-		g_window->event_listener.scroll_event(window,xoffset,yoffset);
-	}
-	static void glfwKeyCallback(GLFWwindow* window,int key,int scancode,int action,int mods){
-		assert(g_window);
-		if(!g_window->event_listener.keyboard_event) return;
-		int ea = 0;
-		if(action == GLFW_PRESS)
-			ea = Press;
-		else if(action == GLFW_RELEASE)
-			ea = Release;
-		else if(action == GLFW_REPEAT)
-			ea = Repeat;
-		g_window->event_listener.keyboard_event(window,transform_key(key,scancode,mods),(event_action_t)ea);
-	}
-	static void glfwDropFileCallback(GLFWwindow* window,int count, const char** df){
-		assert(g_window);
-		if(!g_window->event_listener.file_drop_event) return;
-		g_window->event_listener.file_drop_event(window,count,df);
-	}
-
+	bool imgui = false;
 };
 
+class WindowParser {
+public:
+	struct glfw_keycode_table{
+		std::array<keycode_t,GLFW_KEY_LAST + 1> keys;
+		glfw_keycode_table(){
+			for(auto &k : keys)
+				k = KEY_UNKNOWN;
 
+			keys[GLFW_KEY_SPACE]      = KEY_SPACE;
+			keys[GLFW_KEY_APOSTROPHE] = KEY_APOSTROPHE;
+			keys[GLFW_KEY_COMMA]      = KEY_COMMA;
+			keys[GLFW_KEY_MINUS]      = KEY_MINUS;
+			keys[GLFW_KEY_PERIOD]     = KEY_PERIOD;
+			keys[GLFW_KEY_SLASH]      = KEY_SLASH;
 
-window_t::window_t( const window_desc_t &desc )
-:impl(std::make_unique<Impl>())
-{
-	if(!check_valid_desc(desc)){
-		throw std::runtime_error("invalid window desc");
+			keys[GLFW_KEY_SEMICOLON] = KEY_SEMICOLON;
+			keys[GLFW_KEY_EQUAL]     = KEY_EQUAL;
+
+			keys[GLFW_KEY_LEFT_BRACKET]  = KEY_LBRAC;
+			keys[GLFW_KEY_BACKSLASH]     = KEY_BACKSLASH;
+			keys[GLFW_KEY_RIGHT_BRACKET] = KEY_RBRAC;
+			keys[GLFW_KEY_GRAVE_ACCENT]  = KEY_GRAVE_ACCENT;
+			keys[GLFW_KEY_ESCAPE]        = KEY_ESCAPE;
+
+			keys[GLFW_KEY_ENTER]     = KEY_ENTER;
+			keys[GLFW_KEY_TAB]       = KEY_TAB;
+			keys[GLFW_KEY_BACKSPACE] = KEY_BACKSPACE;
+			keys[GLFW_KEY_INSERT]    = KEY_INSERT;
+			keys[GLFW_KEY_DELETE]    = KEY_DELETE;
+
+			keys[GLFW_KEY_RIGHT] = KEY_RIGHT;
+			keys[GLFW_KEY_LEFT]  = KEY_LEFT;
+			keys[GLFW_KEY_DOWN]  = KEY_DOWN;
+			keys[GLFW_KEY_UP]    = KEY_UP;
+
+			keys[GLFW_KEY_HOME] = KEY_HOME;
+			keys[GLFW_KEY_END]  = KEY_END;
+
+			keys[GLFW_KEY_F1]  = KEY_F1;
+			keys[GLFW_KEY_F2]  = KEY_F2;
+			keys[GLFW_KEY_F3]  = KEY_F3;
+			keys[GLFW_KEY_F4]  = KEY_F4;
+			keys[GLFW_KEY_F5]  = KEY_F5;
+			keys[GLFW_KEY_F6]  = KEY_F6;
+			keys[GLFW_KEY_F7]  = KEY_F7;
+			keys[GLFW_KEY_F8]  = KEY_F8;
+			keys[GLFW_KEY_F9]  = KEY_F9;
+			keys[GLFW_KEY_F10] = KEY_F10;
+			keys[GLFW_KEY_F11] = KEY_F11;
+			keys[GLFW_KEY_F12] = KEY_F12;
+
+			keys[GLFW_KEY_KP_0] = KEY_NUMPAD_0;
+			keys[GLFW_KEY_KP_1] = KEY_NUMPAD_1;
+			keys[GLFW_KEY_KP_2] = KEY_NUMPAD_2;
+			keys[GLFW_KEY_KP_3] = KEY_NUMPAD_3;
+			keys[GLFW_KEY_KP_4] = KEY_NUMPAD_4;
+			keys[GLFW_KEY_KP_5] = KEY_NUMPAD_5;
+			keys[GLFW_KEY_KP_6] = KEY_NUMPAD_6;
+			keys[GLFW_KEY_KP_7] = KEY_NUMPAD_7;
+			keys[GLFW_KEY_KP_8] = KEY_NUMPAD_8;
+			keys[GLFW_KEY_KP_9] = KEY_NUMPAD_9;
+
+			keys[GLFW_KEY_KP_DECIMAL]  = KEY_NUMPAD_DECIMAL;
+			keys[GLFW_KEY_KP_DIVIDE]   = KEY_NUMPAD_DIV;
+			keys[GLFW_KEY_KP_MULTIPLY] = KEY_NUMPAD_MUL;
+			keys[GLFW_KEY_KP_SUBTRACT] = KEY_NUMPAD_SUB;
+			keys[GLFW_KEY_KP_ADD]      = KEY_NUMPAD_ADD;
+			keys[GLFW_KEY_KP_ENTER]    = KEY_NUMPAD_ENTER;
+
+			keys[GLFW_KEY_LEFT_SHIFT]    = KEY_LSHIFT;
+			keys[GLFW_KEY_LEFT_CONTROL]  = KEY_LCTRL;
+			keys[GLFW_KEY_LEFT_ALT]      = KEY_LALT;
+			keys[GLFW_KEY_RIGHT_SHIFT]   = KEY_RSHIFT;
+			keys[GLFW_KEY_RIGHT_CONTROL] = KEY_RCTRL;
+			keys[GLFW_KEY_RIGHT_ALT]     = KEY_RALT;
+
+			for(int i = 0; i < 9; ++i)
+				keys['0' + i] = KEY_D0 + i;
+
+			for(int i = 0; i < 26; ++i)
+				keys['A' + i] = KEY_A + i;
+		}
+	};
+
+	inline static std::unordered_map<GLFWwindow*,window_t*> glfw_window_mp;
+
+	static bool get_window(GLFWwindow* glfw_window,window_t*& window){
+		for(auto& item:glfw_window_mp){
+			if(item.first == glfw_window && glfw_window){
+				window = item.second;
+				return true;
+			}
+		}
+		return false;
 	}
-	impl->desc= desc;
 
-	g_window = this;
+#define GET_WINDOW                            \
+	window_t *window = nullptr;               \
+	if ( !get_window( glfw_window, window ) ) \
+		return;
 
-	if(!impl->init_window()){
-		throw std::runtime_error("create opengl window failed");
+	static void glfw_close_callback(GLFWwindow* glfw_window){
+		GET_WINDOW
+		window->set_window_close( glfwWindowShouldClose(glfw_window));
+		glfwSetWindowShouldClose(glfw_window,GLFW_FALSE);
+	}
+	static void glfw_resize_callback(GLFWwindow* glfw_window,int width,int height){
+		GET_WINDOW
+		window->resize();
+	}
+	static void glfw_focus_callback(GLFWwindow* glfw_window,int focus){
+		GET_WINDOW
+		window->set_focus(focus);
+	}
+	inline static const glfw_keycode_table table;
+	static void glfw_key_callback(GLFWwindow* glfw_window,int key,int scancode,int action,int mods){
+		GET_WINDOW
+		if(window->is_render_imgui())
+			ImGui_ImplGlfw_KeyCallback(glfw_window,key,scancode,action,mods);
+		if(key < 0 || key >= table.keys.size())
+			return;
+		const auto keycode = table.keys[key];
+		if(keycode == KEY_UNKNOWN)
+			return;
+		if(action == GLFW_PRESS)
+			window->set_key_event(keycode,true);
+		else if(action == GLFW_RELEASE)
+			window->set_key_event(keycode, false);
+	}
+	static void glfw_char_callback(GLFWwindow* glfw_window,uint32_t c){
+		GET_WINDOW
+		if(window->is_render_imgui())
+			ImGui_ImplGlfw_CharCallback(glfw_window,c);
+		window->set_char_input_event(c);
+	}
+	static void glfw_mouse_button_callback(GLFWwindow* glfw_window,int button,int action,int mods){
+		GET_WINDOW
+		if(window->is_render_imgui())
+			ImGui_ImplGlfw_MouseButtonCallback(glfw_window,button,action,mods);
+		mouse_button_t btn;
+		if(button == GLFW_MOUSE_BUTTON_LEFT)
+			btn = Mouse_Button_Left;
+		else if(button == GLFW_MOUSE_BUTTON_MIDDLE)
+			btn = Mouse_Button_Middle;
+		else if(button == GLFW_MOUSE_BUTTON_RIGHT)
+			btn = Mouse_Button_Right;
+		else
+			return;
+
+		if(action == GLFW_PRESS)
+			window->set_mouse_button_event(btn,true);
+		else if(action == GLFW_RELEASE)
+			window->set_mouse_button_event(btn,false);
 	}
 
-}
+	static void glfw_cursor_callback(GLFWwindow* glfw_window,double x,double y){
+		GET_WINDOW
+		if(window->is_render_imgui())
+			ImGui_ImplGlfw_CursorPosCallback(glfw_window,x,y);
+		window->set_cursor_pos_event(x,y);
+	}
+	static void glfw_scroll_callback(GLFWwindow* glfw_window,double xoffset,double yoffset){
+		GET_WINDOW
+		if(window->is_render_imgui())
+			ImGui_ImplGlfw_ScrollCallback(glfw_window,xoffset,yoffset);
+		window->set_mouse_scroll_event(static_cast<int>(yoffset));
+	}
+};
 
-void window_t::run()
+window_t::window_t( const window_desc_t &desc, bool maximazed )
 {
-	try {
-		while ( !impl->get_close_flag() ) {
-			impl->dispach_event();
+	impl = std::make_unique<Impl>();
 
-			render_frame();
+	auto& glfw_windows_mp = WindowParser::glfw_window_mp;
 
-			impl->begin_imgui();
-
-			render_imgui();
-
-			impl->end_imgui();
-
-			impl->swap_buffer();
+	if(glfw_windows_mp.empty()){
+		if(glfwInit() != GLFW_TRUE){
+			throw std::runtime_error("failed to init glfw");
 		}
 	}
-	catch(const std::exception& err){
-		std::cerr<<err.what()<<std::endl;
+
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,6);
+	glfwWindowHint(GLFW_RESIZABLE,desc.resizeable ? GLFW_TRUE : GLFW_FALSE);
+	glfwWindowHint(GLFW_MAXIMIZED,maximazed ? GLFW_TRUE : GLFW_FALSE);
+
+	switch ( desc.depth_stencil_format ) {
+	case window_desc_t::depth24_stencil8:
+		glfwWindowHint(GLFW_DEPTH_BITS,24);
+		glfwWindowHint(GLFW_STENCIL_BITS,8);
+		break ;
+	case window_desc_t::depth32_stencil0:
+		glfwWindowHint(GLFW_DEPTH_BITS,32);
+		glfwWindowHint(GLFW_STENCIL_BITS,0);
+		break ;
+	case window_desc_t::depth32_stencil8:
+		glfwWindowHint(GLFW_DEPTH_BITS,32);
+		glfwWindowHint(GLFW_STENCIL_BITS,8);
+		break ;
+	}
+
+	glfwWindowHint(GLFW_SAMPLES,desc.multisamples);
+
+	impl->glfw_window = glfwCreateWindow(
+	  desc.size.x,desc.size.y,desc.title.c_str(),
+	  desc.fullscreen ? glfwGetPrimaryMonitor() : nullptr,nullptr);
+
+	if(!impl->glfw_window){
+		throw std::runtime_error("failed to create glfw window");
+	}
+
+	glfwMakeContextCurrent(impl->glfw_window);
+	glfwFocusWindow(impl->glfw_window);
+	impl->focus = true;
+
+	set_vsync(desc.vsync);
+
+	if(glfw_windows_mp.empty()){
+		if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
+			throw std::runtime_error("glad failed to load opengl");
+		}
+	}
+	glfw_windows_mp.insert({impl->glfw_window,this});
+
+	impl->mouse.set_window(impl->glfw_window);
+
+	glfwSetWindowCloseCallback(impl->glfw_window,WindowParser::glfw_close_callback);
+	glfwSetFramebufferSizeCallback(impl->glfw_window,WindowParser::glfw_resize_callback);
+	glfwSetWindowFocusCallback(impl->glfw_window,WindowParser::glfw_focus_callback);
+	glfwSetKeyCallback(impl->glfw_window,WindowParser::glfw_key_callback);
+	glfwSetMouseButtonCallback(impl->glfw_window,WindowParser::glfw_mouse_button_callback);
+	glfwSetCharCallback(impl->glfw_window,WindowParser::glfw_char_callback);
+//	glfwSetCursorPosCallback(impl->glfw_window,WindowParser::glfw_cursor_callback);
+
+	resize();
+
+	impl->imgui = desc.imgui;
+	if(desc.imgui){
+		ImGui::CreateContext();
+		ImGui::StyleColorsDark();
+
+		ImGui_ImplGlfw_InitForOpenGL(impl->glfw_window,false);
+		ImGui_ImplOpenGL3_Init("#version 460");
 	}
 }
-
-int window_t::width() const
-{
-	return impl->desc.res.x;
-}
-
-int window_t::height() const
-{
-	return impl->desc.res.y;
-}
-
-void window_t::render_frame()
-{
-	GL_EXPR(glClearColor(1,1,1,1));
-	GL_EXPR(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-}
-
-void window_t::render_imgui()
-{
-
-}
-
 window_t::~window_t()
 {
 
+	if(impl->imgui)
+	{
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui_ImplGlfw_Shutdown();
+		ImGui::DestroyContext(ImGui::GetCurrentContext());
+	}
+
+	glfwSetWindowCloseCallback    (impl->glfw_window, nullptr);
+	glfwSetFramebufferSizeCallback(impl->glfw_window, nullptr);
+	glfwSetWindowFocusCallback    (impl->glfw_window, nullptr);
+	glfwSetKeyCallback            (impl->glfw_window, nullptr);
+	glfwSetMouseButtonCallback    (impl->glfw_window, nullptr);
+	glfwSetScrollCallback         (impl->glfw_window, nullptr);
+	glfwSetCharCallback           (impl->glfw_window, nullptr);
+
+	auto& glfw_windows_mp = WindowParser::glfw_window_mp;
+	glfw_windows_mp.erase(impl->glfw_window);
+
+	glfwDestroyWindow(impl->glfw_window);
+
+	if(glfw_windows_mp.empty())
+		glfwTerminate();
+}
+void window_t::new_imgui_frame()
+{
+	assert(impl->imgui);
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplGlfw_NewFrame();
+	ImGui::NewFrame();
+}
+void window_t::render_imgui()
+{
+	assert(impl->imgui);
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+keyboard_t *window_t::get_keyboard() noexcept
+{
+	return &impl->keyboard;
+}
+mouse_t *window_t::get_mouse() noexcept
+{
+	return &impl->mouse;
+}
+void window_t::poll_events()
+{
+	impl->keyboard.update_cur_frame();
+	impl->mouse.update();
+	glfwPollEvents();
+}
+bool window_t::is_focused()
+{
+	return impl->focus;
+}
+void window_t::waiting_for_focus()
+{
+}
+bool window_t::is_window_should_close() const noexcept
+{
+	return impl->close;
+}
+void window_t::set_window_close( bool close ) const noexcept
+{
+	impl->close = true;
+}
+void window_t::set_maximized()
+{
+	glfwMaximizeWindow(impl->glfw_window);
+}
+int window_t::get_window_width() const noexcept
+{
+	return impl->framebuffer_size.x;
+}
+int window_t::get_window_height() const noexcept
+{
+	return impl->framebuffer_size.y;
+}
+vec2i window_t::get_window_size() const noexcept
+{
+	return impl->framebuffer_size;
+}
+double window_t::get_window_w_over_h() const noexcept
+{
+	return static_cast<double>(impl->framebuffer_size.x) /
+	  static_cast<double>(impl->framebuffer_size.y);
+}
+void window_t::swap_buffer()
+{
+	glfwSwapBuffers(impl->glfw_window);
+}
+void window_t::resize()
+{
+	glfwGetFramebufferSize(
+	  impl->glfw_window,
+	  &impl->framebuffer_size.x,
+	  &impl->framebuffer_size.y);
+
+	use_default_viewport();
+}
+bool window_t::is_vsync() const noexcept
+{
+	return impl->vsync;
+}
+void window_t::set_vsync( bool vsync ) noexcept
+{
+	impl->vsync = vsync;
+	glfwSwapInterval(vsync ? 1 : 0);
+}
+void window_t::use_default_viewport() const
+{
+	glViewport(0, 0, impl->framebuffer_size.x, impl->framebuffer_size.y);
+}
+bool window_t::is_render_imgui() const noexcept
+{
+	return impl->imgui;
+}
+void window_t::set_key_event( keycode_t keycode, bool pressed )
+{
+	if(pressed)
+		impl->keyboard.set_key_down(keycode);
+	else
+		impl->keyboard.set_key_up(keycode);
+}
+void window_t::set_mouse_button_event( mouse_button_t button, bool pressed )
+{
+	if(pressed)
+		impl->mouse.set_mouse_button_down(button);
+	else
+		impl->mouse.set_mouse_button_up(button);
+}
+void window_t::set_char_input_event( uint32_t ch )
+{
+	impl->keyboard.set_char_input(ch);
+}
+void window_t::set_mouse_scroll_event( int offset )
+{
+	impl->mouse.set_scroll(offset);
+}
+void window_t::set_focus( bool focus )
+{
+	impl->focus = focus;
+}
+void window_t::set_cursor_pos_event( double x, double y )
+{
+	impl->mouse.update();
 }
 
 }

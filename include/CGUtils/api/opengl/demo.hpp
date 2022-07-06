@@ -28,7 +28,6 @@ public:
 
 				frame();
 
-
 				window->render_imgui();
 				window->swap_buffer();
 			}
