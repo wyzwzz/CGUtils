@@ -29,7 +29,7 @@ void fps_camera_t::set_view_rotation_speed( float speed ) noexcept
 void fps_camera_t::update( const fps_camera_t::UpdateParams &params ) noexcept
 {
 	vert_rad -= cursor_speed * params.cursor_rel_y;
-	hori_rad -= cursor_speed * params.cursor_rel_x;
+	hori_rad += cursor_speed * params.cursor_rel_x;
 
 	const float PI = math::PI_f;
 	while(hori_rad < 0) hori_rad += 2 * PI;
@@ -45,12 +45,12 @@ void fps_camera_t::update( const fps_camera_t::UpdateParams &params ) noexcept
 
 	pos += move_speed * ((float)front_step * front + (float)right_step * right);
 
+
 	if(params.up)
 		pos.y += move_speed;
 	if(params.down)
 		pos.y -= move_speed;
 
-	recalculate_matrics();
 }
 void fps_camera_t::set_perspective( float fovDeg, float nearZ, float farZ ) noexcept
 {

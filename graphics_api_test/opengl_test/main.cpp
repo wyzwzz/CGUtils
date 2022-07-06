@@ -5,7 +5,7 @@
 #include <CGUtils/model.hpp>
 using namespace wzz::gl;
 using namespace wzz::model;
-
+using namespace wzz::math;
 class OpenGLDemo:public gl_app_t{
 public:
 
@@ -42,37 +42,12 @@ private:
 			}
 		}
 		camera.set_position({0.0,0.0,2.0});
-		camera.set_direction(-90,0);
+		camera.set_direction( deg2rad(-90.0),0);
 		camera.set_perspective(45.0,0.1,20.0);
-
 	}
 
 	void frame() override {
-		if(keyboard->is_down(KEY_ESCAPE))
-			window->set_window_close(true);
-		if(keyboard->is_down(KEY_LCTRL)){
-			mouse->show_cursor(!mouse->is_cursor_visible());
-//			mouse->set_cursor_lock(!mouse->is_cursor_locked(),mouse->get_cursor_lock_x(),mouse->get_cursor_lock_y());
-		}
-		//update camera
-//		LOG_INFO("update camera");
-		{
-			camera.set_w_over_h(window->get_window_w_over_h());
-			if(!mouse->is_cursor_visible()){
-				camera.update(
-				  {
-					.front = keyboard->is_pressed('W'),
-					.left  = keyboard->is_pressed('A'),
-					.right = keyboard->is_pressed('D'),
-					.back  = keyboard->is_pressed('S'),
-					.up    = keyboard->is_pressed(KEY_SPACE),
-					.down  = keyboard->is_pressed(KEY_LSHIFT),
-					.cursor_rel_x = static_cast<float>(mouse->get_delta_cursor_x()),
-					.cursor_rel_y = static_cast<float>(mouse->get_delta_cursor_y())
-				  });
-			}
-		}
-//		LOG_INFO("update camera ok");
+		handle_events();
 		//gui
 		static float x = 1.f;
 		if(ImGui::Begin("Settings",nullptr,ImGuiWindowFlags_AlwaysAutoResize)){
@@ -115,7 +90,6 @@ private:
 		texture2d_t albedo_tex;
 	};
 	std::vector<DrawModel> draw_models;
-	fps_camera_t camera;
 };
 int main(){
 	OpenGLDemo(

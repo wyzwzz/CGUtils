@@ -47,7 +47,6 @@ inline void keyboard_t::set_key_down( keycode_t key )
 {
 	if(!is_pressed(key)){
 		cur_frame_table[key] = true;
-		LOG_INFO("key down: {}",key);
 	}
 }
 inline void keyboard_t::set_key_up( keycode_t key )

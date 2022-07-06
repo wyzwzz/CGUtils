@@ -29,11 +29,6 @@ public:
 	double get_delta_cursor_x() const noexcept;
 	double get_delta_cursor_y() const noexcept;
 
-	double get_cursor_lock_x() const noexcept;
-	double get_cursor_lock_y() const noexcept;
-	void set_cursor_lock(bool lock,double lock_x,double lock_y);
-	bool is_cursor_locked() const noexcept;
-
 	void show_cursor(bool show);
 	bool is_cursor_visible() const noexcept;
 
@@ -55,8 +50,6 @@ private:
 
 	double cur_x = 0, cur_y = 0;
 	double rel_x = 0, rel_y = 0;
-	bool is_locked = false;
-	double lock_x = 0, lock_y = 0;
 	bool show = true;
 	GLFWwindow* glfw_window;
 };
@@ -93,24 +86,6 @@ inline double mouse_t::get_delta_cursor_y() const noexcept
 {
 	return rel_y;
 }
-inline double mouse_t::get_cursor_lock_x() const noexcept
-{
-	return lock_x;
-}
-inline double mouse_t::get_cursor_lock_y() const noexcept
-{
-	return lock_y;
-}
-inline void mouse_t::set_cursor_lock( bool lock, double lock_x, double lock_y )
-{
-	is_locked = lock;
-	this->lock_x = lock_x;
-	this->lock_y = lock_y;
-}
-inline bool mouse_t::is_cursor_locked() const noexcept
-{
-	return is_locked;
-}
 
 inline bool mouse_t::is_cursor_visible() const noexcept
 {
@@ -122,8 +97,7 @@ inline void mouse_t::clear()
 	cur_frame_table.reset();
 	cur_x = 0, cur_y = 0;
 	rel_x = 0, rel_y = 0;
-	is_locked = false;
-	lock_x = 0, lock_y = 0;
+
 	if(!show)
 		show_cursor(true);
 }

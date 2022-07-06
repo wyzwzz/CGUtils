@@ -23,13 +23,6 @@ void mouse_t::show_cursor(bool show)
 	cur_y = new_y;
 
 
-	if(is_locked)
-	{
-		glfwSetCursorPos(glfw_window, lock_x, lock_y);
-		cur_x = lock_x;
-		cur_y = lock_y;
-	}
-
 	pre_frame_table = cur_frame_table;
 }
 }
