@@ -19,8 +19,8 @@ file(
 add_library(CGUtils STATIC ${CGUTILS_SRCS})
 
 if(BUILD_ENABLE_OPENGL)
-add_compile_definitions(
-        WZZ_ENABLE_OPENGL
+target_compile_definitions(
+        CGUtils PUBLIC WZZ_ENABLE_OPENGL
 )
 endif()
 
