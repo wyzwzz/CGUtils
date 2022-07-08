@@ -89,7 +89,7 @@ public:
 		auto location = glGetUniformLocation(handle_,name);
 		if(location < 0){
 			LOG_DEBUG("location < 0");
-			throw std::runtime_error("set uniform var: location < 0");
+			throw std::runtime_error("set uniform var: location < 0, " + std::string(name));
 		}
 		detail::set_uniform_value(location,v);
 	}

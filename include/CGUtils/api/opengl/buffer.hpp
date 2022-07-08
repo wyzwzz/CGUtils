@@ -189,7 +189,7 @@ template <typename Block>
 class std140_uniform_block_buffer_t:public buffer_t{
 public:
 	static constexpr int BlockSize = sizeof(Block);
-	static_assert(math::is_power_of_2(BlockSize),"Block size should be power of 2");
+//	static_assert(math::is_power_of_2(BlockSize),"Block size should be power of 2");
 	explicit std140_uniform_block_buffer_t(bool init_handle = false)
 	:buffer_t(init_handle)
 	{
