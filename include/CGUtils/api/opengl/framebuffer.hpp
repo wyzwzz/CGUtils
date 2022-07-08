@@ -76,6 +76,13 @@ public:
 		return glCheckNamedFramebufferStatus(handle_, GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE;
 	}
 
+	void clear_buffer(GLbitfield buffer) noexcept{
+		GL_EXPR(glClear(buffer));
+	}
+
+	static void bind_to_default() noexcept{
+		GL_EXPR(glBindFramebuffer(GL_FRAMEBUFFER,0));
+	}
 };
 
 }

@@ -168,17 +168,17 @@ public:
 
 	void set_texture_param(GLenum param_name,GLint param_value){
 		assert(handle_);
-		glTextureParameteri(handle_,param_name,param_value);
+		GL_EXPR(glTextureParameteri(handle_,param_name,param_value));
 	}
 
 	void bind(GLuint texture_unit) const noexcept{
 		assert(handle_);
-		glBindTextureUnit(texture_unit,handle_);
+		GL_EXPR(glBindTextureUnit(texture_unit,handle_));
 	}
 
 	void unbind(GLuint texture_unit) const noexcept{
 		assert(handle_);
-		glBindTextureUnit(texture_unit,0);
+		GL_EXPR(glBindTextureUnit(texture_unit,0));
 	}
 };
 
@@ -268,12 +268,12 @@ public:
 
 	void bind(GLuint texture_unit) const noexcept{
 		assert(handle_);
-		glBindTextureUnit(texture_unit,handle_);
+		GL_EXPR(glBindTextureUnit(texture_unit,handle_));
 	}
 
 	void unbind(GLuint texture_unit) const noexcept{
 		assert(handle_);
-		glBindTextureUnit(texture_unit,0);
+		GL_EXPR(glBindTextureUnit(texture_unit,0));
 	}
 };
 
@@ -359,17 +359,17 @@ public:
 
 	void set_texture_param(GLenum param_name,GLint param_value){
 		assert(handle_);
-		glTextureParameteri(handle_,param_name,param_value);
+		GL_EXPR(glTextureParameteri(handle_,param_name,param_value));
 	}
 
 	void bind(GLuint texture_unit) const noexcept{
 		assert(handle_);
-		glBindTextureUnit(texture_unit,handle_);
+		GL_EXPR(glBindTextureUnit(texture_unit,handle_));
 	}
 
 	void unbind(GLuint texture_unit) const noexcept{
 		assert(handle_);
-		glBindTextureUnit(texture_unit,0);
+		GL_EXPR(glBindTextureUnit(texture_unit,0));
 	}
 };
 

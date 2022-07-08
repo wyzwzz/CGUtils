@@ -77,9 +77,9 @@ public:
 		assert(handle_);
 		auto location = glGetUniformLocation(handle_,name);
 		if(location < 0){
-			LOG_DEBUG("location < 0");
-			return;
+			LOG_DEBUG("location < 0, {}",name);
 		}
+		//still set
 		detail::set_uniform_value(location,v);
 	}
 
@@ -88,7 +88,7 @@ public:
 		assert(handle_ && name);
 		auto location = glGetUniformLocation(handle_,name);
 		if(location < 0){
-			LOG_DEBUG("location < 0");
+			LOG_DEBUG("location < 0, {}",name);
 			throw std::runtime_error("set uniform var: location < 0, " + std::string(name));
 		}
 		detail::set_uniform_value(location,v);

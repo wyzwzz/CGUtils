@@ -189,7 +189,7 @@ template <typename Block>
 class std140_uniform_block_buffer_t:public buffer_t{
 public:
 	static constexpr int BlockSize = sizeof(Block);
-//	static_assert(math::is_power_of_2(BlockSize),"Block size should be power of 2");
+	static_assert(BlockSize % 16 == 0,"std140 uniform Block's size must be a multiple of 16 bytes");
 	explicit std140_uniform_block_buffer_t(bool init_handle = false)
 	:buffer_t(init_handle)
 	{
@@ -237,8 +237,79 @@ public:
 };
 
 template<typename T>
-class storage_buffer_t:public buffer_t{
-	//todo
+class storage_buffer_t:public gl_object_base_t{
+public:
+
+	explicit storage_buffer_t(bool init_handle = false)
+	  :gl_object_base_t(0)
+	{
+		if(init_handle)
+			initialize_handle();
+	}
+	storage_buffer_t(storage_buffer_t&& other) noexcept
+	:gl_object_base_t((other.handle_))
+	{
+		other.handle_ = 0;
+	}
+
+	storage_buffer_t& operator=(storage_buffer_t&& other) noexcept{
+		destroy();
+		std::swap(handle_,other.handle_);
+		return *this;
+	}
+	~storage_buffer_t(){
+		destroy();
+	}
+	void initialize_handle() noexcept
+	{
+		assert(!handle_);
+		GL_EXPR(glCreateBuffers(1,&handle_));
+		if(!handle_)
+			throw std::runtime_error("opengl create buffer failed");
+	}
+
+	void destroy() noexcept
+	{
+		if(handle_){
+			GL_EXPR(glDeleteBuffers(1,&handle_));
+			handle_ = 0;
+		}
+	}
+
+	//just call once after initialize handle
+	void initialize_buffer_data(const T *data, size_t size, GLbitfield usage) noexcept
+	{
+		assert(handle_);
+		GL_EXPR(glNamedBufferStorage(handle_,size,data,usage));
+		size_ = size;
+	}
+
+	void set_buffer_data(const void* data,size_t offset,size_t size) noexcept{
+		assert(handle_);
+		GL_EXPR(glNamedBufferSubData(handle_,offset,size,data));
+	}
+
+	void bind(GLuint binding_point) const noexcept{
+		assert(handle_);
+		GL_EXPR(glBindBufferBase(GL_SHADER_STORAGE_BUFFER,binding_point,handle_));
+	}
+	void* map(size_t offset,size_t length,GLbitfield access) noexcept{
+		assert(handle_);
+		GL_EXPR(glMapNamedBufferRange(handle_,offset,length,access));
+	}
+	void *map(GLenum access){
+		assert(handle_);
+		GL_EXPR(glMapNamedBuffer(handle_,access));
+	}
+	void unmap() noexcept{
+		assert(handle_);
+		GL_EXPR(glUnmapNamedBuffer(handle_));
+	}
+	size_t size() const noexcept{
+		return size_;
+	}
+private:
+	size_t size_ = 0;
 };
 
 }
