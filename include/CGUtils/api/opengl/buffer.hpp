@@ -260,7 +260,7 @@ public:
 	~storage_buffer_t(){
 		destroy();
 	}
-	void initialize_handle() noexcept
+	void initialize_handle()
 	{
 		assert(!handle_);
 		GL_EXPR(glCreateBuffers(1,&handle_));
@@ -277,16 +277,16 @@ public:
 	}
 
 	//just call once after initialize handle
-	void initialize_buffer_data(const T *data, size_t size, GLbitfield usage) noexcept
+	void initialize_buffer_data(const T *data, size_t size_bytes, GLbitfield usage) noexcept
 	{
 		assert(handle_);
-		GL_EXPR(glNamedBufferStorage(handle_,size,data,usage));
-		size_ = size;
+		GL_EXPR(glNamedBufferStorage(handle_,size_bytes,data,usage));
+		size_ = size_bytes;
 	}
 
-	void set_buffer_data(const void* data,size_t offset,size_t size) noexcept{
+	void set_buffer_data(const void* data,size_t offset,size_t size_bytes) noexcept{
 		assert(handle_);
-		GL_EXPR(glNamedBufferSubData(handle_,offset,size,data));
+		GL_EXPR(glNamedBufferSubData(handle_,offset,size_bytes,data));
 	}
 
 	void bind(GLuint binding_point) const noexcept{
@@ -305,7 +305,7 @@ public:
 		assert(handle_);
 		GL_EXPR(glUnmapNamedBuffer(handle_));
 	}
-	size_t size() const noexcept{
+	size_t size_bytes() const noexcept{
 		return size_;
 	}
 private:

@@ -13,7 +13,7 @@ tcoord3<T>::tcoord3() noexcept
 
 template<typename T>
 tcoord3<T>::tcoord3(const axis_t &x, const axis_t &y, const axis_t &z) noexcept
-  : x(x.normalize()), y(y.normalize()), z(z.normalize())
+  : x(x.normalized()), y(y.normalized()), z(z.normalized())
 {
 
 }
@@ -28,7 +28,7 @@ tcoord3<T>::tcoord3(uninitialized_t) noexcept
 template<typename T>
 typename tcoord3<T>::self_t tcoord3<T>::from_x(axis_t new_x) noexcept
 {
-	new_x = new_x.normalize();
+	new_x = new_x.normalized();
 	axis_t new_z(uninitialized_t{});
 	if(std::abs(std::abs(dot(new_x, axis_t(0, 1, 0))) - 1) < T(0.1))
 		new_z = cross(new_x, axis_t(0, 0, 1));
@@ -52,7 +52,7 @@ typename tcoord3<T>::self_t tcoord3<T>::from_y(axis_t new_y) noexcept
 template<typename T>
 typename tcoord3<T>::self_t tcoord3<T>::from_z(axis_t new_z) noexcept
 {
-	new_z = new_z.normalize();
+	new_z = new_z.normalized();
 	axis_t new_y(uninitialized_t{});
 	if(std::abs(std::abs(dot(new_z, axis_t(1, 0, 0))) - 1) < T(0.1))
 		new_y = cross(new_z, axis_t(0, 1, 0));

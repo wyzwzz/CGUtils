@@ -44,23 +44,23 @@ public:
 		}
 	}
 
-	void attach(GLenum attachment, texture2d_t &tex)
+	void attach(GLenum attachment, texture2d_t &tex) const
 	{
 		assert(handle_);
 		GL_EXPR(glNamedFramebufferTexture(handle_, attachment, tex.handle(), 0));
 	}
 
-	void attach(GLenum attachment, renderbuffer_t &buffer)
+	void attach(GLenum attachment, renderbuffer_t &buffer) const
 	{
 		assert(handle_);
 		GL_EXPR(glNamedFramebufferRenderbuffer(handle_, attachment, GL_RENDERBUFFER, buffer.handle()));
 	}
-	void bind() noexcept
+	void bind() const noexcept
 	{
 		assert(is_complete());
 		GL_EXPR(glBindFramebuffer(GL_FRAMEBUFFER, handle_));
 	}
-	void unbind() noexcept
+	void unbind() const noexcept
 	{
 		assert(is_complete());
 		WZZ_WHEN_DEBUG({
@@ -76,7 +76,7 @@ public:
 		return glCheckNamedFramebufferStatus(handle_, GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE;
 	}
 
-	void clear_buffer(GLbitfield buffer) noexcept{
+	static void clear_buffer(GLbitfield buffer) noexcept{
 		GL_EXPR(glClear(buffer));
 	}
 
