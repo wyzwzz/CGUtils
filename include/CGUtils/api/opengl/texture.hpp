@@ -111,7 +111,7 @@ public:
 	}
 
 	void initialize_handle(){
-		assert(handle_);
+		assert(!handle_);
 		GL_EXPR(glCreateTextures(GL_TEXTURE_1D,1,&handle_));
 		if(!handle_)
 			throw std::runtime_error("failed to create opengl texture1d object");
