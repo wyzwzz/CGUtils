@@ -48,6 +48,10 @@ class tmat3_c{
     const tvec3<T> &get_col(size_t idx) const noexcept;
     tvec3<T>        get_row(size_t idx) const noexcept;
 
+    static self_t rotate_x(T rad) noexcept;
+    static self_t rotate_y(T rad) noexcept;
+    static self_t rotate_z(T rad) noexcept;
+
     bool operator==(const self_t &rhs) const noexcept;
     bool operator!=(const self_t &rhs) const noexcept;
 

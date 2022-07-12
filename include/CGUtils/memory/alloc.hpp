@@ -26,6 +26,8 @@ void call_destructor(T* p,size_t n) noexcept{
 		call_destructor(p[i]);
 }
 
+inline constexpr size_t L1_CACHE_LINE_SIZE = 64;
+
 inline void *aligned_alloc(size_t byte_size, size_t align)
 {
 	assert(align > 0 && !(align & (align - 1)));
@@ -42,6 +44,11 @@ inline void *aligned_alloc(size_t byte_size, size_t align)
 	if(!ret)
 		throw std::bad_alloc();
 	return ret;
+}
+
+template <typename T>
+T* aligned_alloc(size_t count){
+    return (T*) aligned_alloc(count * sizeof(T),L1_CACHE_LINE_SIZE);
 }
 
 inline void aligned_free(void *ptr)

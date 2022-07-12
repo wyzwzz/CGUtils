@@ -1,6 +1,6 @@
 #pragma once
 
-WZZ_MATH_BEGIN
+namespace wzz::geometry{
 
 template <typename T>
 taabb2<T>::taabb2() noexcept
@@ -109,5 +109,4 @@ taabb2<T> operator*(const taabb2<T>& a,const tvec2<T>& b){
         a.high * b
         );
 }
-
-WZZ_MATH_END
+}

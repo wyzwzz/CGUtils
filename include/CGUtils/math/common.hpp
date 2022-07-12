@@ -29,10 +29,10 @@ template <typename T>
 constexpr T invPI = static_cast<T>(1) / PI<T>;
 
 template <typename T>
-constexpr T inv2PI = static_cast<T>(2) / PI<T>;
+constexpr T inv2PI = static_cast<T>(0.5) / PI<T>;
 
 template <typename T>
-constexpr T inv4PI = static_cast<T>(4) / PI<T>;
+constexpr T inv4PI = static_cast<T>(0.25) / PI<T>;
 
 constexpr float PI_f = PI<float>;
 constexpr double PI_d = PI<double>;

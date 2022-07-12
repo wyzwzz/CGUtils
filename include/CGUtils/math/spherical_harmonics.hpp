@@ -45,8 +45,8 @@ tvec<T, 2 * L + 1> project_to_sh( const tvec3<T> &dir, T value ) noexcept;
 template <typename T>
 using sh_func_t = std::function<T( T phi, T theta)>;
 
-constexpr int get_coef_count(int order) {
-	return (order + 1) * (order + 1);
+constexpr int get_coef_count(int degree) {
+	return (degree + 1) * (degree + 1);
 }
 
 /**
@@ -55,6 +55,12 @@ constexpr int get_coef_count(int order) {
  */
 template <typename T, int L>
 auto project_func_to_sh( const sh_func_t<T> &func, int sample_count );
+
+template <typename T>
+auto project_func_to_sh(int degree, const sh_func_t<T> &func, int sample_count );
+
+template <typename T, int DIM>
+auto project_func_to_sh( int degree, const std::function<tvec<T,DIM>(T,T)> &func, int sample_count );
 
 template <typename T>
 using rotate_func_t = std::function<void(const tmat3_c<T>&,T*) noexcept>;

@@ -6,7 +6,7 @@ namespace sh{
 
 namespace detail
 {
-#define USE_HARD_CODED
+//#define USE_HARD_CODED
 template <typename T>
 constexpr auto eval_sh_00(const tvec3<T>& dir){
 #ifndef USE_HARD_CODED
@@ -19,7 +19,7 @@ constexpr auto eval_sh_00(const tvec3<T>& dir){
 template <typename T>
 auto eval_sh_1n1(const tvec3<T>& dir){
 #ifndef USE_HARD_CODED
-	return -std::sqrt(T(0.75) * invPI<T>) * dir.y;
+	return std::sqrt(T(0.75) * invPI<T>) * dir.y;
 #else
 	return static_cast<T>(-0.488603) * dir.y;
 #endif
@@ -28,7 +28,7 @@ auto eval_sh_1n1(const tvec3<T>& dir){
 template <typename T>
 auto eval_sh_10(const tvec3<T>& dir){
 #ifndef USE_HARD_CODED
-	return -std::sqrt(T(0.75) * invPI<T>) * dir.z;
+	return std::sqrt(T(0.75) * invPI<T>) * dir.z;
 #else
 	return T(0.488603) * dir.z;
 #endif
@@ -37,7 +37,7 @@ auto eval_sh_10(const tvec3<T>& dir){
 template <typename T>
 auto eval_sh_1p1(const tvec3<T>& dir){
 #ifndef USE_HARD_CODED
-	return -std::sqrt(T(0.75) * invPI<T>) * dir.x;
+	return std::sqrt(T(0.75) * invPI<T>) * dir.x;
 #else
 	return T(-0.488603) * dir.x;
 #endif
@@ -55,7 +55,7 @@ auto eval_sh_2n2(const tvec3<T>& dir){
 template <typename T>
 auto eval_sh_2n1(const tvec3<T>& dir){
 #ifndef USE_HARD_CODED
-	return  T(-0.5) * std::sqrt(15 * invPI<T>) * dir.y * dir.z;
+	return  T(0.5) * std::sqrt(15 * invPI<T>) * dir.y * dir.z;
 #else
 	return T(-1.092548) * dir.y * dir.z;
 #endif
@@ -73,7 +73,7 @@ auto eval_sh_20(const tvec3<T>& dir){
 template <typename T>
 auto eval_sh_2p1(const tvec3<T>& dir){
 #ifndef USE_HARD_CODED
-	return  T(-0.5) * std::sqrt(15 * invPI<T>) * dir.x * dir.z;
+	return  T(0.5) * std::sqrt(15 * invPI<T>) * dir.x * dir.z;
 #else
 	return T(-1.092548) * dir.x * dir.z;
 #endif
@@ -91,7 +91,7 @@ auto eval_sh_2p2(const tvec3<T>& dir){
 template <typename T>
 auto eval_sh_3n3(const tvec3<T>& dir){
 #ifndef USE_HARD_CODED
-	return T(-0.25) * std::sqrt(T(17.5) * invPI<T>) * dir.y * (3 * dir.x * dir.x - dir.y * dir.y);
+	return T(0.25) * std::sqrt(T(17.5) * invPI<T>) * dir.y * (3 * dir.x * dir.x - dir.y * dir.y);
 #else
 	return T(-0.590044) * dir.y * (3 * dir.x * dir.x - dir.y * dir.y);
 #endif
@@ -109,7 +109,7 @@ auto eval_sh_3n2(const tvec3<T>& dir){
 template <typename T>
 auto eval_sh_3n1(const tvec3<T>& dir){
 #ifndef USE_HARD_CODED
-	return T(-0.25) * std::sqrt(T(10.5) * PI<T>) * dir.y * (4 * dir.z * dir.z - dir.x * dir.x - dir.y * dir.y);
+	return T(0.25) * std::sqrt(T(10.5) * invPI<T>) * dir.y * (4 * dir.z * dir.z - dir.x * dir.x - dir.y * dir.y);
 #else
 	return T(-0.457046) * dir.y * (4 * dir.z * dir.z - dir.x * dir.x - dir.y * dir.y);
 #endif
@@ -145,7 +145,7 @@ auto eval_sh_3p2(const tvec3<T>& dir){
 template <typename T>
 auto eval_sh_3p3(const tvec3<T>& dir){
 #ifndef USE_HARD_CODED
-	return T(-0.25) * std::sqrt(T(17.5) * invPI<T>) * dir.x * (dir.x * dir.x - 3 * dir.y * dir.y);
+	return T(0.25) * std::sqrt(T(17.5) * invPI<T>) * dir.x * (dir.x * dir.x - 3 * dir.y * dir.y);
 #else
 	return T(-0.590044) * dir.x * (dir.x * dir.x - 3 * dir.y * dir.y);;
 #endif
@@ -163,7 +163,7 @@ auto eval_sh_4n4(const tvec3<T>& dir){
 template <typename T>
 auto eval_sh_4n3(const tvec3<T>& dir){
 #ifndef USE_HARD_CODED
-	return T(-0.75) * std::sqrt(T(17.5) * invPI<T>) * dir.y * dir.z * (3 * dir.x * dir.x - dir.y * dir.y);
+	return T(0.75) * std::sqrt(T(17.5) * invPI<T>) * dir.y * dir.z * (3 * dir.x * dir.x - dir.y * dir.y);
 #else
 	return T(-1.770131) * dir.y * dir.z * (3 * dir.x * dir.x - dir.y * dir.y);
 #endif
@@ -181,7 +181,7 @@ auto eval_sh_4n2(const tvec3<T>& dir){
 template <typename T>
 auto eval_sh_4n1(const tvec3<T>& dir){
 #ifndef USE_HARD_CODED
-	return T(-0.75) * std::sqrt(T(2.5) * invPI<T>) * dir.y * dir.z * (7 * dir.z * dir.z - 3);
+	return T(0.75) * std::sqrt(T(2.5) * invPI<T>) * dir.y * dir.z * (7 * dir.z * dir.z - 3);
 #else
 	return T(-0.669047) * dir.y * dir.z * (7 * dir.z * dir.z - 3);
 #endif
@@ -200,7 +200,7 @@ auto eval_sh_40(const tvec3<T>& dir){
 template <typename T>
 auto eval_sh_4p1(const tvec3<T>& dir){
 #ifndef USE_HARD_CODED
-	return T(-0.75) * std::sqrt(T(2.5) * invPI<T>) * dir.x * dir.z * (7 * dir.z * dir.z - 3);
+	return T(0.75) * std::sqrt(T(2.5) * invPI<T>) * dir.x * dir.z * (7 * dir.z * dir.z - 3);
 #else
 	return T(-0.669047) * dir.x * dir.z * (7 * dir.z * dir.z - 3);
 #endif
@@ -218,7 +218,7 @@ auto eval_sh_4p2(const tvec3<T>& dir){
 template <typename T>
 auto eval_sh_4p3(const tvec3<T>& dir){
 #ifndef USE_HARD_CODED
-	return T(-0.75) * std::sqrt(T(17.5) * invPI<T>) * dir.x * dir.z * (dir.x * dir.x - 3 * dir.y * dir.y);
+	return T(0.75) * std::sqrt(T(17.5) * invPI<T>) * dir.x * dir.z * (dir.x * dir.x - 3 * dir.y * dir.y);
 #else
 	return T(-1.770131) * dir.x * dir.z * (dir.x * dir.x - 3 * dir.y * dir.y);
 #endif
@@ -380,6 +380,68 @@ auto project_func_to_sh( const sh_func_t<T> &func, int sample_count ){
 	return ans.map([weight](T x){
 		return x * weight;
 	});
+}
+
+template <typename T>
+auto project_func_to_sh(int degree, const sh_func_t<T> &func, int sample_count ){
+    const auto table = detail::sh_linear_table<T>();
+    const int sample_side = static_cast<int>(std::floor(std::sqrt(sample_count)));
+    std::vector<T> ans(get_coef_count(degree));
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<> rng(0.0, 1.0);
+    for(int i = 0; i < sample_side; ++i){
+        for(int j = 0; j < sample_side; ++j){
+            T u = (i + rng(gen)) / sample_side;
+            T v = (j + rng(gen)) / sample_side;
+            // uniform sample on sphere
+            T phi  = 2 * PI<T> * u;
+            T theta = std::acos(2 * v - 1.0);
+
+            T fv = func(phi,theta);
+
+            for(int l = 0; l <= degree; ++l){
+                for(int m = -l; m <= l; ++m){
+                    int index = get_linear_index(l,m);
+                    ans[index] += fv * table[index]( detail::to_vector(phi,theta));
+                }
+            }
+        }
+    }
+    T weight = T(4) * PI<T> / (sample_side * sample_side);
+    for(auto& x : ans) x *= weight;
+    return ans;
+}
+
+template <typename T, int DIM>
+auto project_func_to_sh( int degree, const std::function<tvec<T,DIM>(T,T)> &func, int sample_count ){
+    const auto table = detail::sh_linear_table<T>();
+    const int sample_side = static_cast<int>(std::floor(std::sqrt(sample_count)));
+    std::vector<tvec<T,DIM>> ans(get_coef_count(degree));
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<> rng(0.0, 1.0);
+    for(int i = 0; i < sample_side; ++i){
+        for(int j = 0; j < sample_side; ++j){
+            T u = (i + rng(gen)) / sample_side;
+            T v = (j + rng(gen)) / sample_side;
+            // uniform sample on sphere
+            T phi  = 2 * PI<T> * u;
+            T theta = std::acos(2 * v - 1.0);//-1 ~ 1
+
+            tvec<T,DIM> fv = func(phi,theta);
+
+            for(int l = 0; l <= degree; ++l){
+                for(int m = -l; m <= l; ++m){
+                    int index = get_linear_index(l,m);
+                    ans[index] += fv * table[index]( detail::to_vector(phi,theta));
+                }
+            }
+        }
+    }
+    T weight = T(4) * PI<T> / (sample_side * sample_side);
+    for(auto& x : ans) x *= weight;
+    return ans;
 }
 
 template <typename T, int L>

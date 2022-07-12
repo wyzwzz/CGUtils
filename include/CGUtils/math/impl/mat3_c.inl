@@ -1,4 +1,7 @@
 #pragma once
+
+#include "CGUtils/math/mat3_c.hpp"
+
 WZZ_MATH_BEGIN
 
 template <typename T>
@@ -149,6 +152,31 @@ typename tmat3_c<T>::self_t &tmat3_c<T>::operator/=(T rhs) noexcept
 }
 
 template<typename T>
+typename tmat3_c<T>::self_t tmat3_c<T>::rotate_x(T rad) noexcept {
+    const auto S = std::sin(rad), C = std::cos(rad);
+    return tmat3_c<T>(
+            1,0,0,
+            0,C,S,
+            0,-S,C);
+}
+
+template<typename T>
+typename  tmat3_c<T>::self_t tmat3_c<T>::rotate_y(T rad) noexcept {
+    const auto S = std::sin(rad), C = std::cos(rad);
+    return self_t(C, 0, -S,
+                  0, 1,  0,
+                  S, 0, C);
+}
+
+template<typename T>
+typename tmat3_c<T>::self_t tmat3_c<T>::rotate_z(T rad) noexcept {
+    const auto S = std::sin(rad), C = std::cos(rad);
+    return self_t(C, S, 0,
+                  -S, C,  0,
+                  0, 0,  1);
+}
+
+    template<typename T>
 tmat3_c<T> operator+(
     const tmat3_c<T> &lhs, const tmat3_c<T> &rhs) noexcept
 {

@@ -48,4 +48,7 @@ public:
 template<typename T>
 tcoord3<T> operator-(const tcoord3<T> &coord) noexcept;
 
+using coord3f = tcoord3<float>;
+using coord3d = tcoord3<double>;
+
 WZZ_MATH_END

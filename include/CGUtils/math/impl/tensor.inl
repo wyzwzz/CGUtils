@@ -235,7 +235,7 @@ auto tensor_t<T, D>::map( F &&func ) const
 	if(!is_available())
 		return tensor_t<RT,D>();
 
-	return tensor_t<RT,D>::from_linear_index_func([&](int i){
+	return tensor_t<RT,D>::from_linear_index_func(shape_,[&](int i){
 		return func(data[i]);
 	});
 }
