@@ -117,3 +117,11 @@ TEST(test_math,test_mat4_c_and_transform){
 	EXPECT_FLOAT_EQ(d.z,0.f);
 	std::cout<<d<<std::endl;
 }
+
+TEST(test_math,test_sh){
+
+	auto res = sh::project_func_to_sh<float,3>([](float phi,float theta)noexcept ->float{
+		return 1.f;
+	},512);
+	std::cout<<res<<std::endl;
+}

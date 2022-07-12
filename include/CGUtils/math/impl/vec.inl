@@ -81,7 +81,7 @@ auto tvec<T, D>::map( F &&f ) const noexcept
 	using ret_t = tvec<remove_rcv_t<decltype(f(data[0]))>, D>;
 	ret_t ret;
 	for(int i = 0; i != D; ++i)
-		ret[i] = f(data[0]);
+		ret[i] = f(data[i]);
 	return ret;
 }
 template <typename T, int D>

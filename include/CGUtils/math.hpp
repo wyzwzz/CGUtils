@@ -12,6 +12,7 @@
 #include "./math/coord.hpp"
 #include "./math/transform2.hpp"
 #include "./math/transform3.hpp"
+#include "./math/spherical_harmonics.hpp"
 
 #include "./math/tensor.hpp"
 #include "./math/tensor_view.hpp"
@@ -31,6 +32,7 @@
 #include "./math/impl/coord.inl"
 #include "./math/impl/transform2.inl"
 #include "./math/impl/transform3.inl"
+#include "./math/impl/spherical_harmonics.inl"
 #include "./math/impl/tensor.inl"
 #include "./math/impl/tensor_view.inl"
 #include "./math/impl/simd/float3.inl"
