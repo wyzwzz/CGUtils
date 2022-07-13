@@ -73,7 +73,7 @@ template <typename T>
 tmat3_c<T> operator*(const tmat3_c<T>& lhs,const tmat3_c<T>& rhs) noexcept;
 
 template <typename T>
-tmat3_c<T> operator*(const tmat3_c<T>& lhs,const tvec3<T>& rhs) noexcept;
+tvec3<T> operator*(const tmat3_c<T>& lhs,const tvec3<T>& rhs) noexcept;
 
 template <typename T>
 tmat3_c<T> operator*(const tvec3<T>& lhs,const tmat3_c<T>& rhs) noexcept;

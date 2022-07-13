@@ -80,6 +80,10 @@ public:
 		GL_EXPR(glClear(buffer));
 	}
 
+	static void clear_color_depth_buffer() noexcept{
+		GL_EXPR(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+	}
+
 	static void bind_to_default() noexcept{
 		GL_EXPR(glBindFramebuffer(GL_FRAMEBUFFER,0));
 	}
