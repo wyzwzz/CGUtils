@@ -277,6 +277,7 @@ public:
 	}
 
 	//just call once after initialize handle
+    //todo change to size_bytes to element count
 	void initialize_buffer_data(const T *data, size_t size_bytes, GLbitfield usage) noexcept
 	{
 		assert(handle_);
