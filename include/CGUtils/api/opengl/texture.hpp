@@ -270,8 +270,8 @@ public:
 		assert(handle_);
 		GL_EXPR(glBindTextureUnit(texture_unit,handle_));
 	}
-    void bind_image(int binding_point,int level,GLenum acess,GLenum format) const noexcept{
-        GL_EXPR(glBindImageTexture(binding_point,handle_,level,GL_FALSE,0,acess,format));
+    void bind_image(int binding_point,int level,GLenum access,GLenum format) const noexcept{
+        GL_EXPR(glBindImageTexture(binding_point,handle_,level,GL_FALSE,0,access,format));
     }
 	void unbind(GLuint texture_unit) const noexcept{
 		assert(handle_);
@@ -376,6 +376,14 @@ public:
 	void unbind(GLuint texture_unit) const noexcept{
 		assert(handle_);
 		GL_EXPR(glBindTextureUnit(texture_unit,0));
+	}
+
+	void bind_image(int binding_point,int level,GLenum access,GLenum format) const noexcept{
+		GL_EXPR(glBindImageTexture(binding_point,handle_,level,GL_FALSE,0,access,format));
+	}
+	void generate_mipmap() const noexcept{
+		assert(handle_);
+		GL_EXPR(glGenerateTextureMipmap(handle_));
 	}
 };
 

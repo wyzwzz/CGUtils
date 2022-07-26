@@ -6,10 +6,6 @@ namespace wzz::gl{
 class sampler_t : public gl_object_base_t
 {
 public:
-
-	/**
-     * @param init_handle 是否立即申请一个gl sampler name
-	 */
 	explicit sampler_t(bool init_handle = false)
 	{
 		if(init_handle)

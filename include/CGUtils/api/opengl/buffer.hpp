@@ -277,11 +277,11 @@ public:
 	}
 
 	//just call once after initialize handle
-	void initialize_buffer_data(const T *data, size_t size_bytes, GLbitfield usage) noexcept
+	void initialize_buffer_data(const T *data, size_t size, GLbitfield usage) noexcept
 	{
 		assert(handle_);
-		GL_EXPR(glNamedBufferStorage(handle_,size_bytes,data,usage));
-		size_ = size_bytes;
+		size_ = size;
+		GL_EXPR(glNamedBufferStorage(handle_, size_ * sizeof(T), data, usage));
 	}
 
 	void set_buffer_data(const void* data,size_t offset,size_t size_bytes) noexcept{
@@ -306,9 +306,14 @@ public:
 		GL_EXPR(glUnmapNamedBuffer(handle_));
 	}
 	size_t size_bytes() const noexcept{
+		return size_ * sizeof(T);
+	}
+	size_t size() const noexcept{
 		return size_;
 	}
+
 private:
+	//element count
 	size_t size_ = 0;
 };
 

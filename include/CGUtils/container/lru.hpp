@@ -7,19 +7,18 @@
 
 #include <unordered_map>
 #include <list>
-#include <utility>
-#if _HAS_CXX17
 #include <optional>
-#endif
+
 /**
  * should add lock if using for multi-thread
  */
 template<typename Key,typename Value,typename Hash=std::hash<Key>>
-class LRUCache{
+class lru_t
+{
 public:
     using ItemType= std::pair<Key,Value>;
     using ItemIterator=typename std::list<ItemType>::iterator;
-    explicit LRUCache(size_t cap):capacity(cap){}
+    explicit lru_t(size_t cap):capacity(cap){}
 
     Value* get_value_ptr(const Key& key){
         auto it=pos.find(key);
@@ -29,7 +28,6 @@ public:
         return &(data.begin()->second);
     }
 
-#if _HAS_CXX17
     std::optional<Value> get_value(const Key& key){
         auto it=pos.find(key);
         if(it==pos.end())
@@ -37,12 +35,13 @@ public:
         move_to_head(it->second);
         return std::make_optional<Value>(data.begin()->second);
     }
+
     std::optional<Value> front_value() const{
         if(data.size()==0)
             return std::optional<Value>(std::nullopt);
         return std::make_optional<Value>(data.begin()->second);
     }
-#endif
+
     /**
      * if key exists then the value of key will update and move this item to head
      */
