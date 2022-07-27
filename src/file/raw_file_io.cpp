@@ -21,6 +21,7 @@ std::vector<unsigned char> read_raw_file_bytes(const std::string& filename){
 }
 
 std::string read_txt_file(const std::string& filename){
+    if(filename.empty()) return {};
 	std::ifstream in(filename,std::ios::in);
 	if(!in.is_open()){
 		//todo replace with file open exception
