@@ -6,16 +6,8 @@
 
 #include <unordered_set>
 
-
-#define TINYOBJLOADER_IMPLEMENTATION
 #include "../ext/tiny_obj_loader.h"
 
-
-
-#define TINYGLTF_IMPLEMENTATION
-//#define STB_IMAGE_IMPLEMENTATION
-#define STB_IMAGE_WRITE_IMPLEMENTATION
-// #define TINYGLTF_NOEXCEPTION // optional. disable exception handling.
 #include "../ext/tiny_gltf.h"
 
 

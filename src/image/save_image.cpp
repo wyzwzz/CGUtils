@@ -1,8 +1,7 @@
 #include <CGUtils/image/save_image.hpp>
-namespace {
-#define STB_IMAGE_WRITE_IMPLEMENTATION
+
 #include "../ext/stb_image_write.h"
-}
+
 namespace wzz::image
 {
 

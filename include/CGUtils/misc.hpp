@@ -6,3 +6,5 @@
 #include "misc/hash.hpp"
 
 #include "misc/singleton.hpp"
+
+#include "misc/intrusive.hpp"

@@ -17,7 +17,9 @@
 #include "./api/opengl/camera.hpp"
 #endif
 
-//WZZ_ENABLE_VULKAN
+#ifdef WZZ_ENABLE_VULKAN
+#include "./api/vulkan/common.hpp"
+#endif
 
 //WZZ_ENABLE_D3D11
 

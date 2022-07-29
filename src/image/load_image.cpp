@@ -4,10 +4,9 @@
 
 //todo handle stbi simd ?
 
-namespace {
-#define STB_IMAGE_IMPLEMENTATION
+
 #include "../ext/stb_image.h"
-}
+
 
 namespace wzz::image{
 

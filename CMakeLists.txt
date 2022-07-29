@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 option(BUILD_TEST "" OFF)
 
 option(BUILD_ENABLE_OPENGL "" ON)
-
+option(BUILD_ENABLE_VULKAN "" ON)
 include(${PROJECT_SOURCE_DIR}/third_party/spdlog.cmake)
 
 file(
@@ -22,6 +22,18 @@ if(BUILD_ENABLE_OPENGL)
 target_compile_definitions(
         CGUtils PUBLIC WZZ_ENABLE_OPENGL
 )
+endif()
+
+if(BUILD_ENABLE_VULKAN)
+target_compile_definitions(
+        CGUtils PUBLIC WZZ_ENABLE_VULKAN
+)
+    add_subdirectory(ext/volk)
+    target_link_libraries(
+            CGUtils
+            PUBLIC
+            volk
+    )
 endif()
 
 target_link_libraries(
@@ -42,7 +54,10 @@ target_compile_features(
         cxx_std_17
 )
 
-target_include_directories(CGUtils PUBLIC ${PROJECT_SOURCE_DIR}/ext/glad/include)
+target_include_directories(CGUtils PUBLIC
+        ${PROJECT_SOURCE_DIR}/ext/glad/include
+        ${PROJECT_SOURCE_DIR}/ext/vulkan-headers/include
+        )
 
 add_subdirectory(ext/glfw)
 
