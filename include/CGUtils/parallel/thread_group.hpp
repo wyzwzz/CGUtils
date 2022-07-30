@@ -38,12 +38,11 @@ struct task_deps_t: misc::intrusive_ptr_enabled_t<task_deps_t,task_deps_deleter_
 	:group(group)
 	{
 		count.store(0,std::memory_order_relaxed);
+		// one implicit dependency is the flush() happening.
 		deps_count.store(1,std::memory_order_relaxed);
 		desc[0] = '\0';
 	}
-	~task_deps_t(){
-		std::cerr<<"call task_deps_t destruct"<<std::endl;
-	}
+	~task_deps_t() = default;
 	void task_completed();
 	void dependency_satisfied();
 	void notify_dependees();
@@ -130,7 +129,7 @@ public:
 	thread_group_t();
 	~thread_group_t();
 
-	void start(uint32_t num_threads,const std::function<void()>& on_thread_begin);
+	void start(uint32_t num_threads,const std::function<void()>& on_thread_begin = nullptr);
 
 	bool is_running() const;
 
@@ -140,9 +139,9 @@ public:
 
 	//add a task to a created task group
 	void enqueue_task(task_group_t& group, std::function<void()> func);
-	//create task group with deps
+	//create task group with pending task
 	task_group_handle_t create_task(std::function<void()> func);
-	//create task group without deps
+	//create task group without any pending task
 	task_group_handle_t create_task();
 
 	//using small vector?
@@ -153,6 +152,8 @@ public:
 	void free_task_group(task_group_t* group);
 	void free_task_deps(detail::task_deps_t* deps);
 
+	//submit will flush and reset the task group, so if a task group submitted if its
+	//dependency is not completed, the task group will not execute
 	void submit(task_group_handle_t& group);
 	void wait_idle();
 	bool is_idle();

@@ -1,5 +1,5 @@
 #include <CGUtils/parallel/thread_group.hpp>
-
+#include <CGUtils/parallel/thread_id.hpp>
 namespace wzz::thread{
 
 // --- task_signal_t ---
@@ -52,7 +52,7 @@ void task_deps_t::dependency_satisfied()
 		else{
 			//move all pending tasks to read tasks
 			group->move_to_ready_tasks(pending_tasks);
-			pending_deps.clear();
+			pending_tasks.clear();
 		}
 	}
 }
@@ -85,7 +85,7 @@ task_group_t::task_group_t( thread_group_t *group )
 task_group_t::~task_group_t()
 {
 	if(!flushed)
-		flushed;
+		flush();
 }
 
 void task_group_t::flush()
@@ -318,6 +318,7 @@ void thread_group_t::set_async_main_thread_name()
 
 void thread_group_t::thread_run_looper( uint32_t self_index )
 {
+	register_thread_index(self_index);
 	for(;;){
 
 		detail::task_t* task = nullptr;

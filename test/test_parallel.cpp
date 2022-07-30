@@ -6,7 +6,7 @@ using namespace wzz::thread;
 
 TEST(test_parallel,test_thread_group){
 	thread_group_t group;
-	group.start(4, {});
+	group.start(1, {});
 
 	auto task1 = group.create_task([]() {
 		LOG_INFO("Ohai!\n");
@@ -31,4 +31,16 @@ TEST(test_parallel,test_thread_group){
 	group.submit(task3);
 
 	group.wait_idle();
+}
+
+TEST(test_parallel,test_paraller_forrange_pooled){
+	thread_group_t thread_group;
+	thread_group.start(10);
+	parallel_forrange(0,10,[](int thread_index,int x){
+		std::cout<<"x: "<<x;
+		  for(int i = 0; i < 10; i++){
+			std::cout<<" "<<i;
+		}
+		std::cout<<std::endl;
+	},thread_group);
 }
