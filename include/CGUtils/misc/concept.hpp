@@ -29,4 +29,13 @@ namespace wzz::misc{
         void* operator new[](size_t) = delete;
     };
 
-}
+	template <typename T>
+	struct no_init_pod_t{
+		T value;
+		no_init_pod_t(){
+			static_assert(sizeof(no_init_pod_t<T>) == sizeof(T), "Sizes do not match.");
+			static_assert(alignof(no_init_pod_t<T>) == alignof(T), "Alignments do not match.");
+		}
+		static_assert(std::is_pod<T>::value, "Type is not POD.");
+	};
+	}

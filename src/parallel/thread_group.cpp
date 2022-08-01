@@ -45,8 +45,9 @@ void task_deps_t::dependency_satisfied()
 	assert(old_deps_count > 0);
 
 	if(old_deps_count == 1){
+		//only enter once since create
 		if(pending_tasks.empty()){
-			//notify dependees if pending tasks all completed
+			//notify dependees if not have any pending tasks
 			notify_dependees();
 		}
 		else{

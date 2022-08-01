@@ -66,4 +66,27 @@ inline void aligned_free(void *ptr)
 #endif
 }
 
+template <typename T,size_t N>
+class stack_allocator_t{
+public:
+	T* allocate_not_cared(size_t count){
+
+	}
+
+	using allocate = decltype(&stack_allocator_t<T,N>::allocate_not_cared);
+
+	T* allocate_cleared(size_t count){
+		T* ret = allocate_not_cared(count);
+		if(ret)
+			std::fill(ret,ret + count, T());
+		return ret;
+	}
+	void reset(){
+		offset = 0;
+	}
+private:
+	T buffer[N];
+	size_t offset = 0;
+};
+
 }

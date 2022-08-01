@@ -8,3 +8,9 @@
 #include "misc/singleton.hpp"
 
 #include "misc/intrusive.hpp"
+
+#include "misc/lru.hpp"
+
+#include "misc/ringbuffer.hpp"
+
+#include "misc/message_queue.hpp"
