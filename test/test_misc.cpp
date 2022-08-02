@@ -70,4 +70,50 @@ TEST(test_misc,test_intrusive){
 	std::cout<<"a->a = "<<as[0]->a<<std::endl;
 }
 
+static unsigned destructor_count = 0;
+
+struct NonPOD : intrusive_hashmap_enabled_t<NonPOD>
+{
+	NonPOD(int a) { v = a; }
+	~NonPOD()
+	{
+		destructor_count++;
+	}
+	int get() { return v; }
+	int v;
+};
+
+static hash_t get_key(int v)
+{
+	return ((v & 7) << 24) | (v >> 3);
+}
+
+TEST(test_misc,test_hashmap){
+	thread_safe_intrusive_hashmap_t<NonPOD> hash_map;
+
+	for (int i = 0; i < 100000; i++)
+	{
+		hash_map.emplace_yield(get_key(i), i + 2000000);
+		hash_map.emplace_replace(get_key(i), i + 3000000);
+	}
+
+	assert(destructor_count == 100000);
+
+	for (int i = 0; i < 100000; i += 2)
+	{
+		hash_map.erase(hash_map.find(get_key(i)));
+	}
+
+	assert(destructor_count == 150000);
+
+	for (int i = 1; i < 100000; i += 2)
+	{
+		auto *v = hash_map.find(get_key(i));
+		assert(v && v->get() == i + 3000000);
+	}
+
+	hash_map.clear();
+	assert(destructor_count == 200000);
+}
+
 

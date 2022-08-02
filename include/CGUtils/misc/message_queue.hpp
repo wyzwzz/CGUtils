@@ -1,6 +1,7 @@
 #pragma once
 #include "ringbuffer.hpp"
-
+#include <memory>
+#include <mutex>
 namespace wzz::misc{
 
 struct message_queue_payload_deleter_t{

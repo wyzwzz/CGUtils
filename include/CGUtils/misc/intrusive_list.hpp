@@ -18,7 +18,7 @@ public:
 	public:
 		friend class intrusive_list_t<T>;
 
-		iterator_t(intrusive_list_enabled_t<T>& node)
+		iterator_t(intrusive_list_enabled_t<T>* node)
 		  :node(node)
 		{}
 
@@ -67,17 +67,6 @@ public:
 			node = node->prev;
 			return *this;
 		}
-		//it++
-		iterator_t operator++(iterator_t& it){
-			auto t = node;
-			node = node->next;
-			return t;
-		}
-		iterator_t operator--(iterator_t& it){
-			auto t = node;
-			node = node->prev;
-			return t;
-		}
 	private:
 		intrusive_list_enabled_t<T>* node = nullptr;
 	};
@@ -91,6 +80,11 @@ public:
 	iterator_t end() const{
 		return iterator_t();
 	}
+
+	void clear(){
+		head = tail = nullptr;
+	}
+
 	//erase it and return next;
 	iterator_t erase(iterator_t it){
 		auto* node = it.get();
