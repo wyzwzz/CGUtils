@@ -64,8 +64,10 @@ std::unique_ptr<model_t> _load_model_from_obj_memory(const std::string& str,cons
 				vertex.normal = { attrib.normals[3 * index.normal_index],
 								  attrib.normals[3 * index.normal_index + 1],
 								  attrib.normals[3 * index.normal_index + 2]};
-				vertex.tex_coord = {attrib.texcoords[2 * index.texcoord_index],
-									attrib.texcoords[2 * index.texcoord_index + 1]};
+                //todo: change to template arg
+                if(index.texcoord_index != -1)
+    				vertex.tex_coord = {attrib.texcoords[2 * index.texcoord_index],
+	    								attrib.texcoords[2 * index.texcoord_index + 1]};
 				mesh.indices.emplace_back(vertex_index++);
 			}
 		}
@@ -83,8 +85,10 @@ std::unique_ptr<model_t> _load_model_from_obj_memory(const std::string& str,cons
 					normal_array.emplace_back( attrib.normals[3 * index.normal_index],
 									  attrib.normals[3 * index.normal_index + 1],
 									  attrib.normals[3 * index.normal_index + 2]);
-					uv_array.emplace_back(attrib.texcoords[2 * index.texcoord_index],
-										 attrib.texcoords[2 * index.texcoord_index + 1]);
+                    //todo
+                    if(index.texcoord_index != -1)
+    					uv_array.emplace_back(attrib.texcoords[2 * index.texcoord_index],
+								    		 attrib.texcoords[2 * index.texcoord_index + 1]);
 				}
 			}
 			assert(pos_array.size() == vertices.size());
