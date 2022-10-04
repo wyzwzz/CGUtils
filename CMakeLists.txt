@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 option(BUILD_TEST "" OFF)
 
 option(BUILD_ENABLE_OPENGL "" ON)
-option(BUILD_ENABLE_VULKAN "" ON)
+option(BUILD_ENABLE_VULKAN "" OFF)
 include(${PROJECT_SOURCE_DIR}/third_party/spdlog.cmake)
 
 file(

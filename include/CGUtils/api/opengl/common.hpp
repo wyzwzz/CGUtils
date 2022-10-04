@@ -69,7 +69,7 @@ namespace wzz::gl{
 
 	inline void PrintGLErrorType(GLenum gl_error)
 	{
-		LOG_ERROR("{}", GetGLErrorStr(gl_error));
+		LOG_ERROR("{}", GetGLErrorStr(gl_error).c_str());
 	}
 
 	inline GLenum PrintGLErrorMsg(const char *file, int line)
@@ -105,7 +105,7 @@ namespace wzz::gl{
 				error = "GL_INVALID_INDEX";
 				break;
 			}
-			LOG_ERROR("{} at line {} in file {}", error, line, file);
+			LOG_ERROR("{} at line {} in file {}", error.c_str(), line, file);
 		}
 		return error_code;
 	}
@@ -126,7 +126,7 @@ namespace wzz::gl{
         int __count = 0;                                                                                                 \
         while ((gl_error = glGetError()) != GL_NO_ERROR)                                                               \
         {                                                                                                              \
-            LOG_ERROR("GL error {} before call {} at line {} in file {}", GetGLErrorStr(gl_error), #expr, __LINE__,    \
+            LOG_ERROR("GL error {} before call {} at line {} in file {}", GetGLErrorStr(gl_error).c_str(), #expr, __LINE__,    \
                       __FILE__);                                                                                       \
             __count++;                                                                                                   \
             if (__count > 10)                                                                                            \
@@ -136,7 +136,7 @@ namespace wzz::gl{
         __count = 0;                                                                                                     \
         while ((gl_error = glGetError()) != GL_NO_ERROR)                                                               \
         {                                                                                                              \
-            LOG_ERROR("Calling {} caused GL error {} at line {} in file {}", #expr, GetGLErrorStr(gl_error), __LINE__, \
+            LOG_ERROR("Calling {} caused GL error {} at line {} in file {}", #expr, GetGLErrorStr(gl_error).c_str(), __LINE__, \
                       __FILE__);                                                                                       \
             if (++__count > 10)                                                                                          \
                 break;                                                                                                 \
@@ -150,7 +150,7 @@ namespace wzz::gl{
         int __count = 0;                                                                                                 \
         while ((gl_error = glGetError()) != GL_NO_ERROR)                                                               \
         {                                                                                                              \
-            LOG_ERROR("GL error {} before line {} in file {}", GetGLErrorStr(gl_error), __LINE__, __FILE__);           \
+            LOG_ERROR("GL error {} before line {} in file {}", GetGLErrorStr(gl_error).c_str(), __LINE__, __FILE__);           \
             if (++__count > 10)                                                                                          \
                 break;                                                                                                 \
         }                                                                                                              \
