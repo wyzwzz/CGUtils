@@ -36,6 +36,7 @@ public:
 			destroy();
 		}
 		catch(const std::exception& err){
+			destroy();
 			std::cerr<<err.what()<<std::endl;
 		}
 	}
