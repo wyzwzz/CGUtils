@@ -60,13 +60,13 @@ void image3d_t<T>::initialize( int w, int h, int d, uninitialized_t )
 template <typename T>
 void image3d_t<T>::initialize( int w, int h, int d, const T *src )
 {
-	*this = image3d_t<T>({w,h,d},src);
+	*this = image3d_t<T>(w,h,d,src);
 }
 
 template <typename T>
 void image3d_t<T>::initialize( int w, int h, int d, const T &init_val )
 {
-	*this = image3d_t<T>({w,h,d},init_val);
+	*this = image3d_t<T>(w,h,d,init_val);
 }
 
 template <typename T>
