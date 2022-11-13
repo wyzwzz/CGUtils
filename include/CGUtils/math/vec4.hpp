@@ -19,6 +19,7 @@ class tvec4{
     tvec4(uninitialized_t) noexcept;
     tvec4(const self_t& v) noexcept;
     tvec4(const tvec<T,4>& v) noexcept;
+	tvec4(tvec3<T> x, T y) noexcept;
 
     bool is_zero() const noexcept;
 
