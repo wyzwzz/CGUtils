@@ -74,15 +74,15 @@ namespace wzz::geometry{
 		auto inv_matrix = matrix.inverse();
 		T near_clip_z = is_OpenGL ? T(-1) : T(0);
 		tvec3<T> proj_space_corners[] = {
-			tvec3(-1, -1, near_clip_z),
-			tvec3(1, -1, near_clip_z),
-			tvec3(-1, 1, near_clip_z),
-			tvec3(1, 1, near_clip_z),
+			tvec3<T>(-1, -1, near_clip_z),
+			tvec3<T>(1, -1, near_clip_z),
+			tvec3<T>(-1, 1, near_clip_z),
+			tvec3<T>(1, 1, near_clip_z),
 
-			tvec3(-1, -1, 1),
-			tvec3(1, -1, 1),
-			tvec3(-1, 1, 1),
-			tvec3(1, 1, 1)
+			tvec3<T>(-1, -1, 1),
+			tvec3<T>(1, -1, 1),
+			tvec3<T>(-1, 1, 1),
+			tvec3<T>(1, 1, 1)
 		};
 		for(int i = 0; i < 8; i++){
 			auto t = inv_matrix * tvec4(proj_space_corners[i].x,

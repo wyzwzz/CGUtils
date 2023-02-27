@@ -365,6 +365,23 @@ public:
 		GL_EXPR(glGenerateTextureMipmap(handle_));
 	}
 
+	template <typename DataT>
+	void set_texture_data(GLsizei x, GLsizei y, GLsizei z, GLsizei width,GLsizei height,GLsizei depth,const DataT* data){
+		assert(handle_);
+		GLint old_row_align;
+		GL_EXPR(glGetIntegerv(GL_UNPACK_ALIGNMENT,&old_row_align));
+		GL_EXPR(glPixelStorei(GL_UNPACK_ALIGNMENT,
+								detail::dt_to_tt<DataT>::row_align));
+		GL_EXPR(glTextureSubImage3D(
+		  handle_,0,x,y,z,width,height,depth,
+		  detail::dt_to_tt<DataT>::format,
+		  detail::dt_to_tt<DataT>::type,data
+		  ));
+		GL_EXPR(glPixelStorei(GL_UNPACK_ALIGNMENT,old_row_align));
+//		GL_EXPR(glGenerateTextureMipmap(handle_));
+	}
+
+
 	void set_texture_param(GLenum param_name,GLint param_value){
 		assert(handle_);
 		GL_EXPR(glTextureParameteri(handle_,param_name,param_value));

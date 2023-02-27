@@ -1,5 +1,7 @@
 #pragma once
 #include <cmath>
+#include "CGUtils/math/vec4.hpp"
+
 WZZ_MATH_BEGIN
 
 template <typename T>
@@ -178,6 +180,11 @@ template <typename T>
 tvec3<T> tvec4<T>::homogenize() const noexcept
 {
     return tvec3(x/w,y/w,z/w);
+}
+template <typename T>
+tvec4<T>::tvec4( tvec3<T> x, T y ) noexcept
+:x(x.x), y(x.y), z(x.z), w(y)
+{
 }
 
 template <typename T>
