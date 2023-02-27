@@ -22,7 +22,7 @@
 
 #ifndef NDEBUG
 #define WZZ_DEBUG
-#define WZZ_WHEN_DEBUG(op) do { op; } while(false)
+#define WZZ_WHEN_DEBUG(op) do { op; } while(false);
 #else
-#define WZZ_WHEN_DEBUG(op) do { } while(false)
+#define WZZ_WHEN_DEBUG(op) do { } while(false);
 #endif
