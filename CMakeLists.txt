@@ -4,8 +4,10 @@ set(CMAKE_CXX_STANDARD 17)
 
 option(BUILD_TEST "" OFF)
 
-option(BUILD_ENABLE_OPENGL "" ON)
+option(BUILD_ENABLE_OPENGL "" OFF)
 option(BUILD_ENABLE_VULKAN "" OFF)
+option(BUILD_ENABLE_D3D11 "" OFF)
+option(BUILD_ENABLE_D3D12 "" OFF)
 include(${PROJECT_SOURCE_DIR}/third_party/spdlog.cmake)
 
 file(
@@ -34,6 +36,12 @@ target_compile_definitions(
             PUBLIC
             volk
     )
+endif()
+
+if(BUILD_ENABLE_D3D11)
+        target_compile_definitions(CGUtils PUBLIC WZZ_ENABLE_D3D11)
+        set(WZZ_D3D11_LIBS d3d11.lib dxgi.lib d3dcompiler.lib dxguid.lib)
+        target_link_libraries(CGUtils PUBLIC ${WZZ_D3D11_LIBS})
 endif()
 
 target_link_libraries(
@@ -69,8 +77,6 @@ target_link_libraries(
 
 if(BUILD_TEST)
     add_subdirectory(test)
-
-    add_subdirectory(tool_test)
 
     add_subdirectory(graphics_api_test)
 
