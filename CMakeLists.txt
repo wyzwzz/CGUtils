@@ -44,6 +44,12 @@ if(BUILD_ENABLE_D3D11)
         target_link_libraries(CGUtils PUBLIC ${WZZ_D3D11_LIBS})
 endif()
 
+if(BUILD_ENABLE_D3D12)
+    target_compile_definitions(CGUtils PUBLIC WZZ_ENABLE_D3D12)
+    set(WZZ_D3D12_LIBS d3d12.lib dxgi.lib d3dcompiler.lib dxguid.lib)
+    target_link_libraries(CGUtils PUBLIC ${WZZ_D3D12_LIBS})
+endif()
+
 target_link_libraries(
         CGUtils
         PUBLIC
