@@ -12,7 +12,7 @@ public:
 	T* allocate(P&&... p){
 		if(freed.empty()){
 			uint32_t num_objects = 64u << mem.size();//increased alloc size
-			T* ptr = static_cast<T*>(aligned_alloc(num_objects * sizeof(T),std::max(L1_CACHE_LINE_SIZE, alignof(T ))));
+			T* ptr = static_cast<T*>(aligned_alloc(num_objects * sizeof(T),std::max<size_t>(L1_CACHE_LINE_SIZE, alignof(T ))));
 
 			if(!ptr){
 				return nullptr;

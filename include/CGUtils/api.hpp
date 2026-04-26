@@ -38,8 +38,8 @@
 
 
 #ifdef WZZ_ENABLE_D3D12
-
-
+#include "./api/d3d12/device.hpp"
+#include "./api/d3d12/command_list.hpp"
 #endif
 
 #include "./api/imgui/imgui.h"
